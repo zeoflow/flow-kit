@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zeoflow">
+
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+
+        <provider
+            android:name=".initializer.ZeoFlowInitProvider"
+            android:authorities="${applicationId}.ZeoflowInitializer"
+            android:exported="false"
+            android:initOrder="100" />
+
+        <activity
+            android:name=".crash.reporter.ui.CrashReporterActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.balsikandar.android.task"
+            android:theme="@style/CrashReporter.Theme" />
+
+        <activity
+            android:name=".crash.reporter.ui.LogMessageActivity"
+            android:parentActivityName=".crash.reporter.ui.CrashReporterActivity"
+            android:theme="@style/CrashReporter.Theme" />
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
+    </application>
+
+</manifest>
