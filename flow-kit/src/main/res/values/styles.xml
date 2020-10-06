@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CrashReporter.Theme" parent="Theme.MaterialElements.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary_CrashReporter</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_CrashReporter</item>
+        <item name="colorAccent">@color/colorAccent_CrashReporter</item>
+
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
+
+</resources>

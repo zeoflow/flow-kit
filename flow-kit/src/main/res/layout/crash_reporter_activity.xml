@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".crash.reporter.ui.CrashReporterActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/llc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary_CrashReporter"
+        android:elevation="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.zeoflow.material.elements.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Crash Log"
+                android:textAllCaps="true"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <com.zeoflow.material.elements.imageview.ShapeableImageView
+                android:id="@+id/sivDelete"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                app:srcCompat="@drawable/ic_menu_delete_white_24dp" />
+        </RelativeLayout>
+
+        <com.zeoflow.material.elements.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary_CrashReporter"
+            app:tabBackground="@color/colorAccent_CrashReporter"
+            app:tabIndicatorColor="#A31107"
+            app:tabIndicatorHeight="4dp"
+            app:tabRippleColor="#A31107"
+            app:tabTextColor="#ffffff"
+            app:tabUnboundedRipple="true" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/llc"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</RelativeLayout>
