@@ -12,7 +12,7 @@ import com.zeoflow.flow.kit.logger.Logger;
 import com.zeoflow.flow.kit.logger.PrettyFormatStrategy;
 import com.zeoflow.zson.Zson;
 
-public class UtilCore
+public class ClassCore
 {
 
     public Context zContext = ZeoFlowApp.getContext();

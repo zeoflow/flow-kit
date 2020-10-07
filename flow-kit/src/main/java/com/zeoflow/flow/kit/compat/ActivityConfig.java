@@ -10,7 +10,7 @@ import com.zeoflow.zson.Zson;
 
 import java.io.Serializable;
 
-public class ActivityConfig extends UtilCore
+public class ActivityConfig extends ClassCore
 {
     private Class<?> activity;
     private Intent intent;
