@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".crash.reporter.ui.CrashReporterActivity">
+    tools:context="com.zeoflow.crash.reporter.ui.CrashReporterActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/llc"
