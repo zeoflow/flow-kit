@@ -7,20 +7,20 @@
         android:supportsRtl="true">
 
         <provider
-            android:name=".initializer.ZeoFlowInitProvider"
+            android:name="com.zeoflow.initializer.ZeoFlowInitProvider"
             android:authorities="${applicationId}.ZeoflowInitializer"
             android:exported="false"
             android:initOrder="100" />
 
         <activity
-            android:name=".crash.reporter.ui.CrashReporterActivity"
+            android:name="com.zeoflow.crash.reporter.ui.CrashReporterActivity"
             android:launchMode="singleTask"
             android:taskAffinity="com.balsikandar.android.task"
             android:theme="@style/CrashReporter.Theme" />
 
         <activity
-            android:name=".crash.reporter.ui.LogMessageActivity"
-            android:parentActivityName=".crash.reporter.ui.CrashReporterActivity"
+            android:name="com.zeoflow.crash.reporter.ui.LogMessageActivity"
+            android:parentActivityName="com.zeoflow.crash.reporter.ui.CrashReporterActivity"
             android:theme="@style/CrashReporter.Theme" />
 
         <uses-library android:name="org.apache.http.legacy" android:required="false" />

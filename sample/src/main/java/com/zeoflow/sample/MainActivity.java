@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.zeoflow.flow.kit.compat.ActivityCore;
+import com.zeoflow.compat.ActivityCore;
 
 public class MainActivity extends ActivityCore
 {
