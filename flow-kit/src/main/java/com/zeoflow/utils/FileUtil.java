@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-public class AssetsHelper
+public class FileUtil
 {
 
     public static String readFile(AssetManager assets, String fileName)
