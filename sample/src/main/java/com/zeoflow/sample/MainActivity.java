@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.zeoflow.flow.kit.compat.ActivityCore;
-import com.zeoflow.flow.kit.crash.reporter.ui.CrashReporterActivity;
 
 public class MainActivity extends ActivityCore
 {
@@ -15,8 +14,5 @@ public class MainActivity extends ActivityCore
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        startActivity(CrashReporterActivity.class);
-
     }
 }

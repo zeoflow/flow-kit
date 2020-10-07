@@ -33,14 +33,12 @@ configurations.all {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.zeoflow:zson:1.2.0'
-    implementation 'com.zeoflow:material-elements:1.2.1'
+    implementation 'com.zeoflow:zson:1.2.2'
+    implementation 'com.zeoflow:material-elements:2.1.0'
     implementation 'com.zeoflow:stylar:1.0.0'
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
     implementation 'androidx.fragment:fragment:1.2.5'
 
 }
