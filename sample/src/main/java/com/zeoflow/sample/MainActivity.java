@@ -7,8 +7,6 @@ import androidx.annotation.Nullable;
 import com.zeoflow.flow.kit.compat.ActivityCore;
 import com.zeoflow.flow.kit.crash.reporter.ui.CrashReporterActivity;
 
-import java.util.ArrayList;
-
 public class MainActivity extends ActivityCore
 {
 
