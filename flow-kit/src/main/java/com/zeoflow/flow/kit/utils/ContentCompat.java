@@ -1,4 +1,4 @@
-package com.zeoflow.flow.kit.content;
+package com.zeoflow.flow.kit.utils;
 
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
@@ -347,28 +347,16 @@ public class ContentCompat
                 SERVICES.put(TelecomManager.class, TELECOM_SERVICE);
                 SERVICES.put(TvInputManager.class, TV_INPUT_SERVICE);
             }
-            if (Build.VERSION.SDK_INT >= 19)
-            {
-                SERVICES.put(AppOpsManager.class, APP_OPS_SERVICE);
-                SERVICES.put(CaptioningManager.class, CAPTIONING_SERVICE);
-                SERVICES.put(ConsumerIrManager.class, CONSUMER_IR_SERVICE);
-                SERVICES.put(PrintManager.class, PRINT_SERVICE);
-            }
-            if (Build.VERSION.SDK_INT >= 18)
-            {
-                SERVICES.put(BluetoothManager.class, BLUETOOTH_SERVICE);
-            }
-            if (Build.VERSION.SDK_INT >= 17)
-            {
-                SERVICES.put(DisplayManager.class, DISPLAY_SERVICE);
-                SERVICES.put(UserManager.class, USER_SERVICE);
-            }
-            if (Build.VERSION.SDK_INT >= 16)
-            {
-                SERVICES.put(InputManager.class, INPUT_SERVICE);
-                SERVICES.put(MediaRouter.class, MEDIA_ROUTER_SERVICE);
-                SERVICES.put(NsdManager.class, NSD_SERVICE);
-            }
+            SERVICES.put(AppOpsManager.class, APP_OPS_SERVICE);
+            SERVICES.put(CaptioningManager.class, CAPTIONING_SERVICE);
+            SERVICES.put(ConsumerIrManager.class, CONSUMER_IR_SERVICE);
+            SERVICES.put(PrintManager.class, PRINT_SERVICE);
+            SERVICES.put(BluetoothManager.class, BLUETOOTH_SERVICE);
+            SERVICES.put(DisplayManager.class, DISPLAY_SERVICE);
+            SERVICES.put(UserManager.class, USER_SERVICE);
+            SERVICES.put(InputManager.class, INPUT_SERVICE);
+            SERVICES.put(MediaRouter.class, MEDIA_ROUTER_SERVICE);
+            SERVICES.put(NsdManager.class, NSD_SERVICE);
             SERVICES.put(AccessibilityManager.class, ACCESSIBILITY_SERVICE);
             SERVICES.put(AccountManager.class, ACCOUNT_SERVICE);
             SERVICES.put(ActivityManager.class, ACTIVITY_SERVICE);
@@ -447,8 +435,8 @@ public class ContentCompat
         }
     }
 
+    @NonNull
     @SuppressLint("UseCompatLoadingForColorStateLists")
-    @Nullable
     public static ColorStateList getColorStateList(@NonNull Resources res, @ColorRes int id,
                                                    @Nullable Resources.Theme theme) throws Resources.NotFoundException
     {

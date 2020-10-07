@@ -10,12 +10,12 @@ import com.zeoflow.zson.Zson;
 
 import java.io.Serializable;
 
-public class ActivityConfig extends UtilCore
+public class ActivityBuilder extends ClassCore
 {
     private Class<?> activity;
     private Intent intent;
 
-    public ActivityConfig(Class<?> activity)
+    public ActivityBuilder(Class<?> activity)
     {
         this.activity = activity;
         this.intent = new Intent(zContext, activity);
@@ -37,168 +37,168 @@ public class ActivityConfig extends UtilCore
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, boolean value)
+    public ActivityBuilder withParam(String name, boolean value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, byte value)
+    public ActivityBuilder withParam(String name, byte value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, char value)
+    public ActivityBuilder withParam(String name, char value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, short value)
+    public ActivityBuilder withParam(String name, short value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, int value)
+    public ActivityBuilder withParam(String name, int value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, long value)
+    public ActivityBuilder withParam(String name, long value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, float value)
+    public ActivityBuilder withParam(String name, float value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, double value)
+    public ActivityBuilder withParam(String name, double value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable String value)
+    public ActivityBuilder withParam(String name, @Nullable String value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable CharSequence value)
+    public ActivityBuilder withParam(String name, @Nullable CharSequence value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable Parcelable value)
+    public ActivityBuilder withParam(String name, @Nullable Parcelable value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable Parcelable[] value)
+    public ActivityBuilder withParam(String name, @Nullable Parcelable[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable Serializable value)
+    public ActivityBuilder withParam(String name, @Nullable Serializable value)
     {
         this.intent.putExtra(name, new Zson().toJson(value));
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable boolean[] value)
+    public ActivityBuilder withParam(String name, @Nullable boolean[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable byte[] value)
+    public ActivityBuilder withParam(String name, @Nullable byte[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable short[] value)
+    public ActivityBuilder withParam(String name, @Nullable short[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable char[] value)
+    public ActivityBuilder withParam(String name, @Nullable char[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable int[] value)
+    public ActivityBuilder withParam(String name, @Nullable int[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable long[] value)
+    public ActivityBuilder withParam(String name, @Nullable long[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable float[] value)
+    public ActivityBuilder withParam(String name, @Nullable float[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable double[] value)
+    public ActivityBuilder withParam(String name, @Nullable double[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable String[] value)
+    public ActivityBuilder withParam(String name, @Nullable String[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable CharSequence[] value)
+    public ActivityBuilder withParam(String name, @Nullable CharSequence[] value)
     {
         this.intent.putExtra(name, value);
         return this;
     }
 
     @NonNull
-    public ActivityConfig withParam(String name, @Nullable Bundle value)
+    public ActivityBuilder withParam(String name, @Nullable Bundle value)
     {
         this.intent.putExtra(name, value);
         return this;
