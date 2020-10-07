@@ -20,7 +20,6 @@ import com.zeoflow.zson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Objects;
 
 public class FragmentCore extends Fragment
 {
@@ -133,12 +132,12 @@ public class FragmentCore extends Fragment
 
     public void startActivity(Class<?> activity)
     {
-        new ActivityConfig(activity).start();
+        new ActivityBuilder(activity).start();
     }
 
-    public ActivityConfig activity(Class<?> activity)
+    public ActivityBuilder activity(Class<?> activity)
     {
-        return new ActivityConfig(activity);
+        return new ActivityBuilder(activity);
     }
 
 }

@@ -122,12 +122,12 @@ public class ActivityCore extends AppCompatActivity
 
     public void startActivity(Class<?> activity)
     {
-        new ActivityConfig(activity).start();
+        new ActivityBuilder(activity).start();
     }
 
-    public ActivityConfig activity(Class<?> activity)
+    public ActivityBuilder activity(Class<?> activity)
     {
-        return new ActivityConfig(activity);
+        return new ActivityBuilder(activity);
     }
 
 }
