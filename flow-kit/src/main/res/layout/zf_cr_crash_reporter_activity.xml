@@ -11,7 +11,7 @@
         android:id="@+id/llc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary_CrashReporter"
+        android:background="@color/zf_cr_colorPrimary_CrashReporter"
         android:elevation="10dp"
         android:orientation="vertical">
 
@@ -36,15 +36,16 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_menu_delete_white_24dp" />
+                android:padding="2dp"
+                app:srcCompat="@drawable/zf_cr_ic_menu_delete_white_24dp" />
         </RelativeLayout>
 
         <com.zeoflow.material.elements.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary_CrashReporter"
-            app:tabBackground="@color/colorAccent_CrashReporter"
+            android:background="@color/zf_cr_colorPrimary_CrashReporter"
+            app:tabBackground="@color/zf_cr_colorAccent_CrashReporter"
             app:tabIndicatorColor="#A31107"
             app:tabIndicatorHeight="4dp"
             app:tabRippleColor="#A31107"

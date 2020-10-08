@@ -1,5 +1,7 @@
 package com.zeoflow.crash.reporter.ui;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +20,8 @@ import com.zeoflow.material.elements.tabs.TabLayout;
 
 import java.io.File;
 
+import static com.zeoflow.crash.reporter.utils.Constants.CRASH_REPORTER_NOTIFICATION_ID;
+
 public class CrashReporterActivity extends ActivityCore
 {
 
@@ -28,7 +32,10 @@ public class CrashReporterActivity extends ActivityCore
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.crash_reporter_activity);
+        setContentView(R.layout.zf_cr_crash_reporter_activity);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(CRASH_REPORTER_NOTIFICATION_ID);
 
         ViewPager viewPager = findViewById(R.id.viewpager);
         if (viewPager != null)
@@ -61,7 +68,7 @@ public class CrashReporterActivity extends ActivityCore
 
     private void setupViewPager(ViewPager viewPager)
     {
-        String[] titles = {getString(R.string.crashes), getString(R.string.exceptions)};
+        String[] titles = {getString(R.string.zf_cr_crashes), getString(R.string.zf_cr_exceptions)};
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), titles);
         viewPager.setAdapter(mainPagerAdapter);
 

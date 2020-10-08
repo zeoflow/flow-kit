@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
-    tools:context=".flow.kit.crash.reporter.ui.LogMessageActivity">
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary_CrashReporter"
+            android:background="@color/zf_cr_colorPrimary_CrashReporter"
             android:paddingTop="5dp"
             android:paddingBottom="10dp">
 
@@ -33,10 +32,21 @@
                 android:id="@+id/sivDelete"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:padding="2dp"
+                app:srcCompat="@drawable/zf_cr_ic_menu_delete_white_24dp" />
+
+            <!--<com.zeoflow.material.elements.imageview.ShapeableImageView
+                android:id="@+id/sivDelete"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/sivShare"
-                app:srcCompat="@drawable/ic_menu_delete_white_24dp" />
+                android:padding="2dp"
+                app:srcCompat="@drawable/zf_cr_ic_menu_delete_white_24dp" />
 
             <com.zeoflow.material.elements.imageview.ShapeableImageView
                 android:id="@+id/sivShare"
@@ -45,7 +55,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_menu_share_white_24dp" />
+                android:padding="2dp"
+                app:srcCompat="@drawable/zf_cr_ic_menu_share_white_24dp" />-->
         </RelativeLayout>
 
         <HorizontalScrollView

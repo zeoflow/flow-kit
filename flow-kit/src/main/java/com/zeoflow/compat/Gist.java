@@ -9,7 +9,7 @@ import com.zeoflow.zson.model.Attribute;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gist extends ClassCore
+public class Gist extends EntityCore
 {
 
     private List<Extra> extras = new ArrayList<>();

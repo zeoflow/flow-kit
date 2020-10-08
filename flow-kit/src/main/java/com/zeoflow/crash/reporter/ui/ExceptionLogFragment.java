@@ -49,7 +49,7 @@ public class ExceptionLogFragment extends FragmentCore
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.exception_log, container, false);
+        return inflater.inflate(R.layout.zf_cr_exception_log, container, false);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class ExceptionLogFragment extends FragmentCore
         ArrayList<File> listOfFiles = new ArrayList<>(Arrays.asList(directory.listFiles()));
         for (Iterator<File> iterator = listOfFiles.iterator(); iterator.hasNext(); )
         {
-            if (iterator.next().getName().contains(Constants.CRASH_SUFFIX))
+            if (iterator.next().getName().contains(Constants.CRASH_PREFIX))
             {
                 iterator.remove();
             }

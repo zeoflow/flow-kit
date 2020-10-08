@@ -2,11 +2,11 @@
 <resources>
 
     <style name="CrashReporter.Theme" parent="Theme.MaterialElements.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary_CrashReporter</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark_CrashReporter</item>
-        <item name="colorAccent">@color/colorAccent_CrashReporter</item>
+        <item name="colorPrimary">@color/zf_cr_colorPrimary_CrashReporter</item>
+        <item name="colorPrimaryDark">@color/zf_cr_colorPrimaryDark_CrashReporter</item>
+        <item name="colorAccent">@color/zf_cr_colorAccent_CrashReporter</item>
 
-        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:windowBackground">@drawable/zf_cr_background_splash_crash</item>
     </style>
 
 </resources>

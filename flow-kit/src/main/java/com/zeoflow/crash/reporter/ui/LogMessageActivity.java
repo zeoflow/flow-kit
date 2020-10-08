@@ -1,5 +1,7 @@
 package com.zeoflow.crash.reporter.ui;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -8,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.zeoflow.compat.ActivityCore;
+import com.zeoflow.compat.EntityCore;
 import com.zeoflow.flow.kit.R;
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.NotNull;
@@ -20,7 +24,9 @@ import com.zeoflow.stylar.view.StylarView;
 
 import java.io.File;
 
-public class LogMessageActivity extends AppCompatActivity
+import static com.zeoflow.crash.reporter.utils.Constants.CRASH_REPORTER_NOTIFICATION_ID;
+
+public class LogMessageActivity extends ActivityCore
 {
 
     private StylarView zsvAppInfo;
@@ -29,13 +35,15 @@ public class LogMessageActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_message);
+        setContentView(R.layout.zf_cr_activity_log_message);
         zsvAppInfo = findViewById(R.id.zsvAppInfo);
 
-        Intent intent = getIntent();
-        if (intent != null)
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(CRASH_REPORTER_NOTIFICATION_ID);
+
+        if (getStringExtra("LogMessage") != null)
         {
-            String dirPath = intent.getStringExtra("LogMessage");
+            String dirPath = getStringExtra("LogMessage");
             if (dirPath != null && !dirPath.isEmpty())
             {
                 File file = new File(dirPath);
@@ -65,7 +73,7 @@ public class LogMessageActivity extends AppCompatActivity
 
         });
 
-        findViewById(R.id.sivDelete).setOnClickListener(view ->
+        /*findViewById(R.id.sivShare).setOnClickListener(view ->
         {
             Intent intent1 = getIntent();
             String filePath = null;
@@ -74,8 +82,7 @@ public class LogMessageActivity extends AppCompatActivity
                 filePath = intent1.getStringExtra("LogMessage");
             }
             shareCrashReport(filePath);
-
-        });
+        });*/
     }
 
     private void getAppInfo()
@@ -105,6 +112,7 @@ public class LogMessageActivity extends AppCompatActivity
         intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_TEXT, AppUtils.getDeviceDetails());
         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivity(Intent.createChooser(intent, "Share via"));
     }
 }

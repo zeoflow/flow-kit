@@ -12,7 +12,7 @@ import com.zeoflow.logger.Logger;
 import com.zeoflow.logger.PrettyFormatStrategy;
 import com.zeoflow.zson.Zson;
 
-public class ClassCore
+public class EntityCore
 {
 
     public Context zContext = ZeoFlowApp.getContext();
@@ -61,6 +61,16 @@ public class ClassCore
         {
             Logger.json(new Zson().toJson(object));
         }
+    }
+
+    public void startActivity(Class<?> activity)
+    {
+        new ActivityBuilder(activity).start();
+    }
+
+    public ActivityBuilder configureNewActivity(Class<?> activity)
+    {
+        return new ActivityBuilder(activity);
     }
 
 }

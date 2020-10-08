@@ -12,8 +12,12 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
-import com.zeoflow.flow.kit.R;
+import com.zeoflow.compat.EntityCore;
 import com.zeoflow.crash.reporter.CrashReporter;
+import com.zeoflow.crash.reporter.service.NotificationService;
+import com.zeoflow.crash.reporter.ui.CrashReporterActivity;
+import com.zeoflow.crash.reporter.ui.LogMessageActivity;
+import com.zeoflow.flow.kit.R;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -27,10 +31,12 @@ import java.util.Locale;
 import java.util.Objects;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
+import static com.zeoflow.crash.reporter.utils.Constants.ACTION_CR_ZF_DELETE;
+import static com.zeoflow.crash.reporter.utils.Constants.ACTION_CR_ZF_SHARE;
 import static com.zeoflow.crash.reporter.utils.Constants.CHANNEL_NOTIFICATION_ID;
 import static com.zeoflow.initializer.ZeoFlowApp.getContext;
 
-public class CrashUtil
+public class CrashUtil extends EntityCore
 {
 
     private static final String TAG = CrashUtil.class.getSimpleName();
@@ -42,39 +48,37 @@ public class CrashUtil
 
     private static String getCrashLogTime()
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss", Locale.getDefault());
         return dateFormat.format(new Date());
+    }
+
+    private static String getFileName()
+    {
+        return Constants.CRASH_PREFIX + getCrashLogTime() + Constants.FILE_EXTENSION;
     }
 
     public static void saveCrashReport(final Throwable throwable)
     {
 
         String crashReportPath = CrashReporter.getCrashReportPath();
-        String filename = getCrashLogTime() + Constants.CRASH_SUFFIX + Constants.FILE_EXTENSION;
-        writeToFile(crashReportPath, filename, getStackTrace(throwable));
+        String filePath = writeToFile(crashReportPath, getFileName(), getStackTrace(throwable));
 
-        showNotification(throwable.getLocalizedMessage(), true);
+        showNotification(throwable.getLocalizedMessage(), true, filePath);
     }
 
     public static void logException(final Exception exception)
     {
 
-        new Thread(new Runnable()
+        new Thread(() ->
         {
-            @Override
-            public void run()
-            {
+            String crashReportPath = CrashReporter.getCrashReportPath();
+            String filePath = writeToFile(crashReportPath, getFileName(), getStackTrace(exception));
 
-                String crashReportPath = CrashReporter.getCrashReportPath();
-                final String filename = getCrashLogTime() + Constants.EXCEPTION_SUFFIX + Constants.FILE_EXTENSION;
-                writeToFile(crashReportPath, filename, getStackTrace(exception));
-
-                showNotification(exception.getLocalizedMessage(), false);
-            }
+            showNotification(exception.getLocalizedMessage(), false, filePath);
         }).start();
     }
 
-    private static void writeToFile(String crashReportPath, String filename, String crashLog)
+    private static String writeToFile(String crashReportPath, String filename, String crashLog)
     {
 
         if (TextUtils.isEmpty(crashReportPath))
@@ -102,51 +106,82 @@ public class CrashUtil
         {
             e.printStackTrace();
         }
+        return crashReportPath + File.separator + filename;
     }
 
     private static void showNotification(String localisedMsg, boolean isCrash)
+    {
+        showNotification(localisedMsg, isCrash, "");
+    }
+
+    private static void showNotification(String localisedMsg, boolean isCrash, String filePath)
     {
 
         if (CrashReporter.isNotificationEnabled())
         {
             Context context = getContext();
-            NotificationManager notificationManager = (NotificationManager) context.
-                getSystemService(NOTIFICATION_SERVICE);
-            createNotificationChannel(notificationManager, context);
+
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+            createNotificationChannel(notificationManager);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_NOTIFICATION_ID);
-            builder.setSmallIcon(R.drawable.ic_warning_black_24dp);
+            builder.setSmallIcon(R.drawable.zf_cr_ic_crash_notification);
+            builder.setAutoCancel(true);
+            builder.setColor(ContextCompat.getColor(context, R.color.zf_cr_colorAccent_CrashReporter));
 
             Intent intent = CrashReporter.getLaunchIntent();
             intent.putExtra(Constants.LANDING, isCrash);
             intent.setAction(Long.toString(System.currentTimeMillis()));
-
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             builder.setContentIntent(pendingIntent);
-
-            builder.setContentTitle(context.getString(R.string.view_crash_report));
+            builder.setContentTitle(context.getString(R.string.zf_cr_view_crash_report));
 
             if (TextUtils.isEmpty(localisedMsg))
             {
-                builder.setContentText(context.getString(R.string.check_your_message_here));
+                builder.setContentText(context.getString(R.string.zf_cr_check_your_message_here));
+
+                Intent viewLogIntent = new Intent(context, CrashReporterActivity.class);
+                PendingIntent viewLogPendingIntent = PendingIntent.getActivity(context, 0, viewLogIntent, 0);
+                builder.addAction(R.drawable.zf_cr_ic_warning_black_24dp, "View Crashes", viewLogPendingIntent);
             } else
             {
-                builder.setContentText(localisedMsg);
+                if (localisedMsg.length() > 100)
+                {
+                    localisedMsg = localisedMsg.substring(0, 97) + "...";
+                }
+                builder
+                    .setContentText(localisedMsg)
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(localisedMsg));
+
+                Intent viewLogIntent = new Intent(context, LogMessageActivity.class);
+                viewLogIntent.putExtra("LogMessage", filePath);
+                PendingIntent viewLogPendingIntent = PendingIntent.getActivity(context, 0, viewLogIntent, 0);
+
+                Intent deleteAction = new Intent(context, NotificationService.class);
+                deleteAction.putExtra("LogMessage", filePath);
+                deleteAction.setAction(ACTION_CR_ZF_DELETE);
+                PendingIntent deleteActionPending = PendingIntent.getService(context, 0, deleteAction, 0);
+
+                Intent shareAction = new Intent(context, LogMessageActivity.class);
+                shareAction.putExtra("LogMessage", filePath);
+                PendingIntent shareActionPending = PendingIntent.getActivity(context, 0, shareAction, 0);
+
+                builder.addAction(R.drawable.zf_cr_ic_warning_black_24dp, "View", viewLogPendingIntent);
+                builder.addAction(R.drawable.zf_cr_ic_warning_black_24dp, "Delete", deleteActionPending);
+                builder.addAction(R.drawable.zf_cr_ic_warning_black_24dp, "Share", shareActionPending);
             }
 
-            builder.setAutoCancel(true);
-            builder.setColor(ContextCompat.getColor(context, R.color.colorAccent_CrashReporter));
-
-            notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
+            notificationManager.notify(Constants.CRASH_REPORTER_NOTIFICATION_ID, builder.build());
         }
     }
 
-    private static void createNotificationChannel(NotificationManager notificationManager, Context context)
+    private static void createNotificationChannel(NotificationManager notificationManager)
     {
         if (Build.VERSION.SDK_INT >= 26)
         {
-            CharSequence name = context.getString(R.string.notification_crash_report_title);
-            String description = "";
-            NotificationChannel channel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+            String title = "Crash Reporter";
+            String description = "When a crash occurs or an exception, a notification will be pushed.";
+            NotificationChannel channel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, title, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(description);
             notificationManager.createNotificationChannel(channel);
         }
@@ -156,7 +191,6 @@ public class CrashUtil
     {
         final Writer result = new StringWriter();
         final PrintWriter printWriter = new PrintWriter(result);
-
         e.printStackTrace(printWriter);
         String crashLog = result.toString();
         printWriter.close();
@@ -169,7 +203,7 @@ public class CrashUtil
             + File.separator + Constants.CRASH_REPORT_DIR;
 
         File file = new File(defaultPath);
-        file.mkdirs();
+        boolean isDirectoryCreated = file.mkdirs();
         return defaultPath;
     }
 }

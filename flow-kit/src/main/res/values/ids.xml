@@ -1,4 +1,4 @@
 <resources>
-    <item name="statusbarutil_fake_status_bar_view" type="id" />
-    <item name="statusbarutil_translucent_view" type="id" />
+    <item name="zf_cr_statusbarutil_fake_status_bar_view" type="id" />
+    <item name="zf_cr_statusbarutil_translucent_view" type="id" />
 </resources>
