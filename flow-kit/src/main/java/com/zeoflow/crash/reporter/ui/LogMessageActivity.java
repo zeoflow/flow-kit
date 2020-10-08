@@ -29,7 +29,7 @@ public class LogMessageActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_message);
+        setContentView(R.layout.zf_cr_activity_log_message);
         zsvAppInfo = findViewById(R.id.zsvAppInfo);
 
         Intent intent = getIntent();

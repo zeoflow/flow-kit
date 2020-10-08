@@ -49,7 +49,7 @@ public class ExceptionLogFragment extends FragmentCore
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.exception_log, container, false);
+        return inflater.inflate(R.layout.zf_cr_exception_log, container, false);
     }
 
     @Override

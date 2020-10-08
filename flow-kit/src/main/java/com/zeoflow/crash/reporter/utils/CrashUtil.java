@@ -114,7 +114,7 @@ public class CrashUtil
                 getSystemService(NOTIFICATION_SERVICE);
             createNotificationChannel(notificationManager, context);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_NOTIFICATION_ID);
-            builder.setSmallIcon(R.drawable.ic_warning_black_24dp);
+            builder.setSmallIcon(R.drawable.zf_cr_ic_warning_black_24dp);
 
             Intent intent = CrashReporter.getLaunchIntent();
             intent.putExtra(Constants.LANDING, isCrash);
@@ -123,18 +123,18 @@ public class CrashUtil
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             builder.setContentIntent(pendingIntent);
 
-            builder.setContentTitle(context.getString(R.string.view_crash_report));
+            builder.setContentTitle(context.getString(R.string.zf_cr_view_crash_report));
 
             if (TextUtils.isEmpty(localisedMsg))
             {
-                builder.setContentText(context.getString(R.string.check_your_message_here));
+                builder.setContentText(context.getString(R.string.zf_cr_check_your_message_here));
             } else
             {
                 builder.setContentText(localisedMsg);
             }
 
             builder.setAutoCancel(true);
-            builder.setColor(ContextCompat.getColor(context, R.color.colorAccent_CrashReporter));
+            builder.setColor(ContextCompat.getColor(context, R.color.zf_cr_colorAccent_CrashReporter));
 
             notificationManager.notify(Constants.NOTIFICATION_ID, builder.build());
         }
@@ -144,7 +144,7 @@ public class CrashUtil
     {
         if (Build.VERSION.SDK_INT >= 26)
         {
-            CharSequence name = context.getString(R.string.notification_crash_report_title);
+            CharSequence name = context.getString(R.string.zf_cr_notification_crash_report_title);
             String description = "";
             NotificationChannel channel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(description);

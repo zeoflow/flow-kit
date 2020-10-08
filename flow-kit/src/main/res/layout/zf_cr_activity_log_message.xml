@@ -15,7 +15,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary_CrashReporter"
+            android:background="@color/zf_cr_colorPrimary_CrashReporter"
             android:paddingTop="5dp"
             android:paddingBottom="10dp">
 
@@ -36,7 +36,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_toStartOf="@+id/sivShare"
-                app:srcCompat="@drawable/ic_menu_delete_white_24dp" />
+                app:srcCompat="@drawable/zf_cr_ic_menu_delete_white_24dp" />
 
             <com.zeoflow.material.elements.imageview.ShapeableImageView
                 android:id="@+id/sivShare"
@@ -45,7 +45,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/ic_menu_share_white_24dp" />
+                app:srcCompat="@drawable/zf_cr_ic_menu_share_white_24dp" />
         </RelativeLayout>
 
         <HorizontalScrollView

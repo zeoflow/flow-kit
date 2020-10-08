@@ -41,7 +41,7 @@ public class CrashLogFragment extends FragmentCore
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.crash_log, container, false);
+        View view = inflater.inflate(R.layout.zf_cr_crash_log, container, false);
         crashRecyclerView = view.findViewById(R.id.crashRecyclerView);
 
         return view;

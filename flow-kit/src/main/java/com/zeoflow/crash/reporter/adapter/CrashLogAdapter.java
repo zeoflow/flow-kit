@@ -39,7 +39,7 @@ public class CrashLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NotNull ViewGroup parent, int viewType)
     {
-        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(R.layout.custom_item, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(context).inflate(R.layout.zf_cr_custom_item, null);
         return new CrashLogViewHolder(view);
     }
 

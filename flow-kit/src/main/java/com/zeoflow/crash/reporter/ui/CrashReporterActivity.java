@@ -28,7 +28,7 @@ public class CrashReporterActivity extends ActivityCore
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.crash_reporter_activity);
+        setContentView(R.layout.zf_cr_crash_reporter_activity);
 
         ViewPager viewPager = findViewById(R.id.viewpager);
         if (viewPager != null)
@@ -61,7 +61,7 @@ public class CrashReporterActivity extends ActivityCore
 
     private void setupViewPager(ViewPager viewPager)
     {
-        String[] titles = {getString(R.string.crashes), getString(R.string.exceptions)};
+        String[] titles = {getString(R.string.zf_cr_crashes), getString(R.string.zf_cr_exceptions)};
         mainPagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), titles);
         viewPager.setAdapter(mainPagerAdapter);
 
