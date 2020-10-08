@@ -3,7 +3,6 @@
     <string name="zf_cr_crashes">Crashes</string>
     <string name="zf_cr_exceptions">Exceptions</string>
     <string name="zf_cr_view_crash_report">View Crash Report</string>
-    <string name="zf_cr_notification_crash_report_title">Crash Reporter notifications</string>
     <string name="zf_cr_check_your_message_here">Check your crashes and exceptions here.</string>
     <string name="zf_cr_delete_confirmation_msg">Are you sure to delete all the crash logs</string>
     <string name="zf_cr_cancel">CANCEL</string>

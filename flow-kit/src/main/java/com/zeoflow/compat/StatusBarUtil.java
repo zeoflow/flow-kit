@@ -76,7 +76,7 @@ public class StatusBarUtil
                                             @IntRange(from = 0, to = 255) int statusBarAlpha)
     {
 
-        ViewGroup contentView = ((ViewGroup) activity.findViewById(android.R.id.content));
+        ViewGroup contentView = activity.findViewById(android.R.id.content);
         View rootView = contentView.getChildAt(0);
         int statusBarHeight = getStatusBarHeight(activity);
         if (rootView instanceof CoordinatorLayout)

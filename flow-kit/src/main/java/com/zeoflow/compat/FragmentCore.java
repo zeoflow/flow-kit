@@ -135,7 +135,7 @@ public class FragmentCore extends Fragment
         new ActivityBuilder(activity).start();
     }
 
-    public ActivityBuilder activity(Class<?> activity)
+    public ActivityBuilder configureNewActivity(Class<?> activity)
     {
         return new ActivityBuilder(activity);
     }

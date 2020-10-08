@@ -10,11 +10,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.zeoflow.flow.kit.R;
+import com.zeoflow.annotation.NotNull;
 import com.zeoflow.crash.reporter.ui.LogMessageActivity;
 import com.zeoflow.crash.reporter.utils.FileUtils;
-
-import org.jetbrains.annotations.NotNull;
+import com.zeoflow.flow.kit.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -76,6 +75,7 @@ public class CrashLogAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void setUpViewHolder(final Context context, final File file)
         {
             final String filePath = file.getAbsolutePath();
+
             messageLogTime.setText(file.getName().replaceAll("[a-zA-Z_.]", ""));
             String crashLog = FileUtils.readFirstLineFromFile(new File(filePath));
             textViewMsg.setText(crashLog);

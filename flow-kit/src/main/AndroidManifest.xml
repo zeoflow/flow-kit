@@ -23,7 +23,17 @@
             android:parentActivityName="com.zeoflow.crash.reporter.ui.CrashReporterActivity"
             android:theme="@style/CrashReporter.Theme" />
 
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+        <service android:name="com.zeoflow.crash.reporter.service.NotificationService"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </service>
 
     </application>
 

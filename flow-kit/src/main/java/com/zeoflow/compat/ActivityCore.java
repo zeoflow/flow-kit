@@ -18,6 +18,7 @@ import com.zeoflow.zson.Zson;
 import com.zeoflow.zson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityCore extends AppCompatActivity
@@ -125,7 +126,7 @@ public class ActivityCore extends AppCompatActivity
         new ActivityBuilder(activity).start();
     }
 
-    public ActivityBuilder activity(Class<?> activity)
+    public ActivityBuilder configureNewActivity(Class<?> activity)
     {
         return new ActivityBuilder(activity);
     }

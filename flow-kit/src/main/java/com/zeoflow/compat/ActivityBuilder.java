@@ -10,7 +10,7 @@ import com.zeoflow.zson.Zson;
 
 import java.io.Serializable;
 
-public class ActivityBuilder extends ClassCore
+public class ActivityBuilder extends EntityCore
 {
     private Class<?> activity;
     private Intent intent;

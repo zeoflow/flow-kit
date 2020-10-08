@@ -97,7 +97,7 @@ public class ExceptionLogFragment extends FragmentCore
         ArrayList<File> listOfFiles = new ArrayList<>(Arrays.asList(directory.listFiles()));
         for (Iterator<File> iterator = listOfFiles.iterator(); iterator.hasNext(); )
         {
-            if (iterator.next().getName().contains(Constants.CRASH_SUFFIX))
+            if (iterator.next().getName().contains(Constants.CRASH_PREFIX))
             {
                 iterator.remove();
             }
