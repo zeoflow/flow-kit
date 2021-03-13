@@ -38,6 +38,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.function.Supplier;
 
+@SuppressWarnings({"EqualsReplaceableByObjectsCall", "unused"})
 public final class Objects
 {
 
@@ -298,6 +299,7 @@ public final class Objects
      *                              the {@code supplier.get()} value is {@code null}
      * @since 9
      */
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static <T> T requireNonNullElseGet(T obj, Supplier<? extends T> supplier)
     {
         return (obj != null) ? obj

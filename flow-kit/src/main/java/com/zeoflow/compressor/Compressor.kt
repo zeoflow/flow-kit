@@ -9,6 +9,13 @@ import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 object Compressor {
+
+    @JvmStatic
+    fun variantJava(): JavaCompressor {
+        return JavaCompressor()
+    }
+
+    @JvmStatic
     suspend fun compress(
             imageFile: File,
             coroutineContext: CoroutineContext = Dispatchers.IO,
@@ -23,4 +30,5 @@ object Compressor {
         }
         return@withContext result
     }
+
 }
