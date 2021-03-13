@@ -11,7 +11,7 @@ import kotlin.coroutines.CoroutineContext
 object Compressor {
 
     @JvmStatic
-    fun variantJava(): JavaCompressor {
+    fun javaVariant(): JavaCompressor {
         return JavaCompressor()
     }
 
