@@ -1,4 +1,4 @@
-package com.zeoflow.compat;
+package com.zeoflow.app;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import com.zeoflow.zson.Zson;
 
 import java.io.Serializable;
 
-public class ActivityBuilder extends EntityCore
+public class ActivityBuilder extends Entity
 {
     private Class<?> activity;
     private Intent intent;

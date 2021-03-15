@@ -12,7 +12,7 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
-import com.zeoflow.compat.EntityCore;
+import com.zeoflow.app.Entity;
 import com.zeoflow.crash.reporter.CrashReporter;
 import com.zeoflow.crash.reporter.service.NotificationService;
 import com.zeoflow.crash.reporter.ui.CrashReporterActivity;
@@ -32,11 +32,10 @@ import java.util.Objects;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.zeoflow.crash.reporter.utils.Constants.ACTION_CR_ZF_DELETE;
-import static com.zeoflow.crash.reporter.utils.Constants.ACTION_CR_ZF_SHARE;
 import static com.zeoflow.crash.reporter.utils.Constants.CHANNEL_NOTIFICATION_ID;
 import static com.zeoflow.initializer.ZeoFlowApp.getContext;
 
-public class CrashUtil extends EntityCore
+public class CrashUtil extends Entity
 {
 
     private static final String TAG = CrashUtil.class.getSimpleName();

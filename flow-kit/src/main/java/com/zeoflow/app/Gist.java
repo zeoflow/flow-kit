@@ -1,6 +1,8 @@
-package com.zeoflow.compat;
+package com.zeoflow.app;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.zeoflow.model.Extra;
 import com.zeoflow.zson.ZsonAttributes;
@@ -9,14 +11,14 @@ import com.zeoflow.zson.model.Attribute;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gist extends EntityCore
+public class Gist extends Entity
 {
 
     private List<Extra> extras = new ArrayList<>();
 
-    public Gist(FragmentCore fragmentCore)
+    public Gist(Fragment fragment)
     {
-        Bundle bundle = fragmentCore.getArguments();
+        Bundle bundle = fragment.getArguments();
         if (bundle != null)
         {
             bundle.get("initialize");
@@ -35,13 +37,13 @@ public class Gist extends EntityCore
         }
     }
 
-    public Gist(ActivityCore activityCore)
+    public Gist(Activity activity)
     {
-        if (activityCore.getIntent() != null)
+        if (activity.getIntent() != null)
         {
-            if (activityCore.getIntent().getExtras() != null)
+            if (activity.getIntent().getExtras() != null)
             {
-                Bundle bundle = activityCore.getIntent().getExtras();
+                Bundle bundle = activity.getIntent().getExtras();
                 if (bundle != null)
                 {
                     bundle.get("initialize");

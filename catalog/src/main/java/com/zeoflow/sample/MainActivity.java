@@ -4,10 +4,10 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 
-import com.zeoflow.compat.ActivityCore;
+import com.zeoflow.app.Activity;
 import com.zeoflow.compressor.Compressor;
 
-public class MainActivity extends ActivityCore
+public class MainActivity extends Activity
 {
 
     @Override

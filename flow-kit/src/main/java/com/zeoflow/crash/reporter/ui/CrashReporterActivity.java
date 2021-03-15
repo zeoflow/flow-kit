@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import androidx.viewpager.widget.ViewPager;
 
 import com.zeoflow.flow.kit.R;
-import com.zeoflow.compat.ActivityCore;
+import com.zeoflow.app.Activity;
 import com.zeoflow.crash.reporter.CrashReporter;
 import com.zeoflow.crash.reporter.adapter.MainPagerAdapter;
 import com.zeoflow.crash.reporter.utils.Constants;
@@ -22,7 +22,7 @@ import java.io.File;
 
 import static com.zeoflow.crash.reporter.utils.Constants.CRASH_REPORTER_NOTIFICATION_ID;
 
-public class CrashReporterActivity extends ActivityCore
+public class CrashReporterActivity extends Activity
 {
 
     private MainPagerAdapter mainPagerAdapter;

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zeoflow.flow.kit.R;
-import com.zeoflow.compat.FragmentCore;
+import com.zeoflow.app.Fragment;
 import com.zeoflow.crash.reporter.CrashReporter;
 import com.zeoflow.crash.reporter.adapter.CrashLogAdapter;
 import com.zeoflow.crash.reporter.utils.Constants;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class CrashLogFragment extends FragmentCore
+public class CrashLogFragment extends Fragment
 {
 
     private CrashLogAdapter logAdapter;
