@@ -1,1 +1,1 @@
-include ':sample', ':flow-kit'
+include ':catalog', ':flow-kit'
