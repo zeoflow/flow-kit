@@ -1,27 +1,26 @@
-package com.zeoflow.compat;
+package com.zeoflow.app;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
 
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.Nullable;
-import com.zeoflow.model.Extra;
 import com.zeoflow.initializer.ZeoFlowApp;
 import com.zeoflow.logger.AndroidLogAdapter;
 import com.zeoflow.logger.FormatStrategy;
 import com.zeoflow.logger.Logger;
 import com.zeoflow.logger.PrettyFormatStrategy;
+import com.zeoflow.model.Extra;
 import com.zeoflow.zson.JsonElement;
 import com.zeoflow.zson.Zson;
 import com.zeoflow.zson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityCore extends AppCompatActivity
+public class FragmentActivity extends androidx.fragment.app.FragmentActivity
 {
 
     public Context zContext = ZeoFlowApp.getContext();
@@ -72,53 +71,22 @@ public class ActivityCore extends AppCompatActivity
         }
     }
 
-    public Gist getGist()
-    {
-        return new Gist(this);
+    public final <T extends View> T findViewById(int id, Bundle bundle, String key) {
+        View view = getSupportFragmentManager().getFragment(bundle, key).getView();
+        if (view == null) {
+            throw new IllegalStateException("Fragment " + this + " did not return a View from"
+                    + " onViewCreated() or this was called before onViewCreated().");
+        }
+        return view.findViewById(id);
     }
 
-    public List<Extra> getExtras()
-    {
-        return getGist().getExtras();
-    }
-
-    public JsonElement getExtra(String key)
-    {
-        return getGist().getExtra(key).getValue();
-    }
-
-    public int getIntExtra(String key)
-    {
-        return getGist().getExtra(key).getValue().getAsInt();
-    }
-
-    public <T> List<T> getArrayExtra(String key)
-    {
-        Zson zson = new Zson();
-        Type type = new TypeToken<List<T>>()
-        {
-        }.getType();
-        return zson.fromJson(getGist().getExtra(key).getValue().getAsString(), type);
-    }
-
-    public String getStringExtra(String key)
-    {
-        return getGist().getExtra(key).getValue().getAsString();
-    }
-
-    public Object getObjectExtra(String key)
-    {
-        return getGist().getExtra(key).getValue().getAsJsonObject();
-    }
-
-    public boolean getBooleanExtra(String key)
-    {
-        return getGist().getExtra(key).getValue().getAsBoolean();
-    }
-
-    public float getFloatExtra(String key)
-    {
-        return getGist().getExtra(key).getValue().getAsFloat();
+    public final <T extends View> T findViewById(int id, int fragmentIndex) {
+        View view = getSupportFragmentManager().getFragments().get(fragmentIndex).getView();
+        if (view == null) {
+            throw new IllegalStateException("Fragment " + this + " did not return a View from"
+                + " onViewCreated() or this was called before onViewCreated().");
+        }
+        return view.findViewById(id);
     }
 
     public void startActivity(Class<?> activity)

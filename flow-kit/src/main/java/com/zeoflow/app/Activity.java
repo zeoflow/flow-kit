@@ -1,18 +1,26 @@
-package com.zeoflow.compat;
+package com.zeoflow.app;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.Nullable;
+import com.zeoflow.model.Extra;
 import com.zeoflow.initializer.ZeoFlowApp;
 import com.zeoflow.logger.AndroidLogAdapter;
 import com.zeoflow.logger.FormatStrategy;
 import com.zeoflow.logger.Logger;
 import com.zeoflow.logger.PrettyFormatStrategy;
+import com.zeoflow.zson.JsonElement;
 import com.zeoflow.zson.Zson;
+import com.zeoflow.zson.reflect.TypeToken;
 
-public class EntityCore
+import java.lang.reflect.Type;
+import java.util.List;
+
+public class Activity extends AppCompatActivity
 {
 
     public Context zContext = ZeoFlowApp.getContext();
@@ -63,12 +71,61 @@ public class EntityCore
         }
     }
 
-    public void startActivity(Class<?> activity)
+    public com.zeoflow.app.Gist getGist()
     {
-        new ActivityBuilder(activity).start();
+        return new Gist(this);
     }
 
-    public ActivityBuilder configureNewActivity(Class<?> activity)
+    public List<Extra> getExtras()
+    {
+        return getGist().getExtras();
+    }
+
+    public JsonElement getExtra(String key)
+    {
+        return getGist().getExtra(key).getValue();
+    }
+
+    public int getIntExtra(String key)
+    {
+        return getGist().getExtra(key).getValue().getAsInt();
+    }
+
+    public <T> List<T> getArrayExtra(String key)
+    {
+        Zson zson = new Zson();
+        Type type = new TypeToken<List<T>>()
+        {
+        }.getType();
+        return zson.fromJson(getGist().getExtra(key).getValue().getAsString(), type);
+    }
+
+    public String getStringExtra(String key)
+    {
+        return getGist().getExtra(key).getValue().getAsString();
+    }
+
+    public Object getObjectExtra(String key)
+    {
+        return getGist().getExtra(key).getValue().getAsJsonObject();
+    }
+
+    public boolean getBooleanExtra(String key)
+    {
+        return getGist().getExtra(key).getValue().getAsBoolean();
+    }
+
+    public float getFloatExtra(String key)
+    {
+        return getGist().getExtra(key).getValue().getAsFloat();
+    }
+
+    public void startActivity(Class<?> activity)
+    {
+        new com.zeoflow.app.ActivityBuilder(activity).start();
+    }
+
+    public com.zeoflow.app.ActivityBuilder configureNewActivity(Class<?> activity)
     {
         return new ActivityBuilder(activity);
     }

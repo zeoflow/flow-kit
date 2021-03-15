@@ -8,10 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.zeoflow.compat.ActivityCore;
-import com.zeoflow.compat.EntityCore;
+import com.zeoflow.app.Activity;
 import com.zeoflow.flow.kit.R;
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.NotNull;
@@ -26,7 +23,7 @@ import java.io.File;
 
 import static com.zeoflow.crash.reporter.utils.Constants.CRASH_REPORTER_NOTIFICATION_ID;
 
-public class LogMessageActivity extends ActivityCore
+public class LogMessageActivity extends Activity
 {
 
     private StylarView zsvAppInfo;

@@ -1,4 +1,4 @@
-package com.zeoflow.compat;
+package com.zeoflow.app;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -21,7 +21,7 @@ import com.zeoflow.zson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class FragmentCore extends Fragment
+public class Fragment extends androidx.fragment.app.Fragment
 {
 
     public Context zContext = ZeoFlowApp.getContext();
@@ -81,7 +81,7 @@ public class FragmentCore extends Fragment
         return requireView().findViewById(id);
     }
 
-    public Gist getGist()
+    public com.zeoflow.app.Gist getGist()
     {
         return new Gist(this);
     }
@@ -132,10 +132,10 @@ public class FragmentCore extends Fragment
 
     public void startActivity(Class<?> activity)
     {
-        new ActivityBuilder(activity).start();
+        new com.zeoflow.app.ActivityBuilder(activity).start();
     }
 
-    public ActivityBuilder configureNewActivity(Class<?> activity)
+    public com.zeoflow.app.ActivityBuilder configureNewActivity(Class<?> activity)
     {
         return new ActivityBuilder(activity);
     }
