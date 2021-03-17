@@ -65,10 +65,10 @@ public class Entity
 
     public void startActivity(Class<?> activity)
     {
-        new com.zeoflow.app.ActivityBuilder(activity).start();
+        new ActivityBuilder(activity).start();
     }
 
-    public com.zeoflow.app.ActivityBuilder configureNewActivity(Class<?> activity)
+    public ActivityBuilder configureNewActivity(Class<?> activity)
     {
         return new ActivityBuilder(activity);
     }
