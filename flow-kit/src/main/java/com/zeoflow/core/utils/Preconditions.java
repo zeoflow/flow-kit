@@ -208,27 +208,27 @@ public final class Preconditions
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static <T> T requireNonNull(T obj, Supplier<String> messageSupplier)
     {
-        return Objects.requireNonNull(obj, messageSupplier);
+        return java.util.Objects.requireNonNull(obj, messageSupplier);
     }
 
     public static <T> T requireNonNullElseGet(T obj, Supplier<? extends T> supplier)
     {
-        return Objects.requireNonNullElseGet(obj, supplier);
+        return java.util.Objects.requireNonNullElseGet(obj, supplier);
     }
 
     public static <T> T requireNonNullElse(T obj, T defaultObj)
     {
-        return Objects.requireNonNullElse(obj, defaultObj);
+        return java.util.Objects.requireNonNullElse(obj, defaultObj);
     }
 
     public static <T> T requireNonNull(T obj, String message)
     {
-        return Objects.requireNonNull(obj);
+        return java.util.Objects.requireNonNull(obj);
     }
 
     public static <T> T requireNonNull(T obj)
     {
-        return Objects.requireNonNull(obj);
+        return java.util.Objects.requireNonNull(obj);
     }
 
     /**
@@ -769,7 +769,7 @@ public final class Preconditions
         }
         for (String s : values)
         {
-            if (Objects.equals(value, s))
+            if (java.util.Objects.equals(value, s))
             {
                 return true;
             }
@@ -794,7 +794,7 @@ public final class Preconditions
     public static float[] checkArrayElementsInRange(float[] value, float lower, float upper,
                                                     String valueName)
     {
-        Objects.requireNonNull(value, valueName + " must not be null");
+        java.util.Objects.requireNonNull(value, valueName + " must not be null");
 
         for (int i = 0; i < value.length; ++i)
         {
@@ -833,7 +833,7 @@ public final class Preconditions
     public static int[] checkArrayElementsInRange(int[] value, int lower, int upper,
                                                   String valueName)
     {
-        Objects.requireNonNull(value, valueName + " must not be null");
+        java.util.Objects.requireNonNull(value, valueName + " must not be null");
 
         for (int i = 0; i < value.length; ++i)
         {
@@ -878,12 +878,17 @@ public final class Preconditions
         Integer... args)
     {
         List<Integer> largs = List.of(args);
-        RuntimeException e = oobef == null
-            ? null : oobef.apply(checkKind, largs);
+        RuntimeException e = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N)
+        {
+            e = oobef == null
+                ? null : oobef.apply(checkKind, largs);
+        }
         return e == null
             ? new IndexOutOfBoundsException(outOfBoundsMessage(checkKind, largs)) : e;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private static RuntimeException outOfBoundsCheckIndex(
         BiFunction<String, List<Integer>, ? extends RuntimeException> oobe,
         int index, int length)
@@ -891,6 +896,7 @@ public final class Preconditions
         return outOfBounds(oobe, "checkIndex", index, length);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private static RuntimeException outOfBoundsCheckFromToIndex(
         BiFunction<String, List<Integer>, ? extends RuntimeException> oobe,
         int fromIndex, int toIndex, int length)
@@ -898,6 +904,7 @@ public final class Preconditions
         return outOfBounds(oobe, "checkFromToIndex", fromIndex, toIndex, length);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private static RuntimeException outOfBoundsCheckFromIndexSize(
         BiFunction<String, List<Integer>, ? extends RuntimeException> oobe,
         int fromIndex, int size, int length)

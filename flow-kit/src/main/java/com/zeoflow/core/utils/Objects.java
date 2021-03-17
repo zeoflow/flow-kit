@@ -25,20 +25,14 @@
 
 package com.zeoflow.core.utils;
 
-import android.os.Build;
-
-import com.zeoflow.annotation.ForceInline;
 import com.zeoflow.annotation.KeepForApi;
 import com.zeoflow.annotation.Nullable;
-import com.zeoflow.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.function.Supplier;
 
-@SuppressWarnings({"EqualsReplaceableByObjectsCall", "unused"})
+@SuppressWarnings({"EqualsReplaceableByObjectsCall", "unused", "unchecked", "RedundantSuppression"})
 public final class Objects
 {
 
@@ -54,6 +48,7 @@ public final class Objects
         return Arrays.hashCode(var0);
     }
 
+    @SuppressWarnings("rawtypes")
     @KeepForApi
     public static final class ToStringHelper
     {
