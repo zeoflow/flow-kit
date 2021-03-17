@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.view.View;
 
-import androidx.fragment.app.Fragment;
-
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.Nullable;
 import com.zeoflow.model.Extra;
@@ -81,7 +79,7 @@ public class Fragment extends androidx.fragment.app.Fragment
         return requireView().findViewById(id);
     }
 
-    public com.zeoflow.app.Gist getGist()
+    public Gist getGist()
     {
         return new Gist(this);
     }
@@ -132,10 +130,10 @@ public class Fragment extends androidx.fragment.app.Fragment
 
     public void startActivity(Class<?> activity)
     {
-        new com.zeoflow.app.ActivityBuilder(activity).start();
+        new ActivityBuilder(activity).start();
     }
 
-    public com.zeoflow.app.ActivityBuilder configureNewActivity(Class<?> activity)
+    public ActivityBuilder configureNewActivity(Class<?> activity)
     {
         return new ActivityBuilder(activity);
     }

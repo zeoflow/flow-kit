@@ -16,7 +16,6 @@ import com.zeoflow.flow.kit.R;
 import com.zeoflow.app.Fragment;
 import com.zeoflow.crash.reporter.CrashReporter;
 import com.zeoflow.crash.reporter.adapter.CrashLogAdapter;
-import com.zeoflow.crash.reporter.utils.Constants;
 import com.zeoflow.crash.reporter.utils.CrashUtil;
 
 import java.io.File;
@@ -24,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Objects;
+
+import static com.zeoflow.crash.reporter.utils.Constants.CRASH_PREFIX;
 
 public class ExceptionLogFragment extends Fragment
 {
@@ -94,10 +96,10 @@ public class ExceptionLogFragment extends Fragment
             throw new RuntimeException("The path provided doesn't exists : " + directoryPath);
         }
 
-        ArrayList<File> listOfFiles = new ArrayList<>(Arrays.asList(directory.listFiles()));
+        ArrayList<File> listOfFiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(directory.listFiles())));
         for (Iterator<File> iterator = listOfFiles.iterator(); iterator.hasNext(); )
         {
-            if (iterator.next().getName().contains(Constants.CRASH_PREFIX))
+            if (iterator.next().getName().contains(CRASH_PREFIX))
             {
                 iterator.remove();
             }
