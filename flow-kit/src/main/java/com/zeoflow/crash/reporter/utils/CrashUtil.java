@@ -53,7 +53,7 @@ public class CrashUtil extends Entity
 
     private static String getFileName()
     {
-        return CRASH_PREFIX + getCrashLogTime() + FILE_EXTENSION;
+        return "crash_" + getCrashLogTime() + ".txt";
     }
 
     public static void saveCrashReport(final Throwable throwable)
@@ -122,13 +122,13 @@ public class CrashUtil extends Entity
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             createNotificationChannel(notificationManager);
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_NOTIFICATION_ID);
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "zf_cr_crash_reporter_notify");
             builder.setSmallIcon(R.drawable.zf_cr_ic_crash_notification);
             builder.setAutoCancel(true);
             builder.setColor(ContextCompat.getColor(context, R.color.zf_cr_colorAccent_CrashReporter));
 
             Intent intent = CrashReporter.getLaunchIntent();
-            intent.putExtra(LANDING, isCrash);
+            intent.putExtra("landing", isCrash);
             intent.setAction(Long.toString(System.currentTimeMillis()));
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             builder.setContentIntent(pendingIntent);
@@ -158,7 +158,7 @@ public class CrashUtil extends Entity
 
                 Intent deleteAction = new Intent(context, NotificationService.class);
                 deleteAction.putExtra("LogMessage", filePath);
-                deleteAction.setAction(ACTION_CR_ZF_DELETE);
+                deleteAction.setAction("DELETE_ACTION_CR_ZF");
                 PendingIntent deleteActionPending = PendingIntent.getService(context, 0, deleteAction, 0);
 
                 Intent shareAction = new Intent(context, LogMessageActivity.class);
@@ -170,7 +170,7 @@ public class CrashUtil extends Entity
                 builder.addAction(R.drawable.zf_cr_ic_warning_black_24dp, "Share", shareActionPending);
             }
 
-            notificationManager.notify(CRASH_REPORTER_NOTIFICATION_ID, builder.build());
+            notificationManager.notify(8102020, builder.build());
         }
     }
 
@@ -180,7 +180,7 @@ public class CrashUtil extends Entity
         {
             String title = "Crash Reporter";
             String description = "When a crash occurs or an exception, a notification will be pushed.";
-            NotificationChannel channel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, title, NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("zf_cr_crash_reporter_notify", title, NotificationManager.IMPORTANCE_DEFAULT);
             channel.setDescription(description);
             notificationManager.createNotificationChannel(channel);
         }
@@ -199,7 +199,7 @@ public class CrashUtil extends Entity
     public static String getDefaultPath()
     {
         String defaultPath = Objects.requireNonNull(getContext().getExternalFilesDir(null)).getAbsolutePath()
-            + File.separator + CRASH_REPORT_DIR;
+            + File.separator + "Crash Reports";
 
         File file = new File(defaultPath);
         boolean isDirectoryCreated = file.mkdirs();

@@ -35,7 +35,7 @@ public class LogMessageActivity extends Activity
         zsvAppInfo = findViewById(R.id.zsvAppInfo);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(CRASH_REPORTER_NOTIFICATION_ID);
+        notificationManager.cancel(8102020);
 
         if (getStringExtra("LogMessage") != null)
         {
