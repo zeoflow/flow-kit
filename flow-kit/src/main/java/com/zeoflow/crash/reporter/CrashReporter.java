@@ -8,6 +8,7 @@ import com.zeoflow.crash.reporter.utils.CrashUtil;
 
 import static com.zeoflow.initializer.ZeoFlowApp.getContext;
 
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class CrashReporter
 {
 

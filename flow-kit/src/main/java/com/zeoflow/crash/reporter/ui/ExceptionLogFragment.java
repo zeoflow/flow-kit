@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Objects;
 
-import static com.zeoflow.crash.reporter.utils.Constants.CRASH_PREFIX;
+import static com.zeoflow.crash.reporter.utils.Constants.*;
 
 public class ExceptionLogFragment extends Fragment
 {

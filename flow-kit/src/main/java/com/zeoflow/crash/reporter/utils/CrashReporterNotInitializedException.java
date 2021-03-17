@@ -1,12 +1,9 @@
 package com.zeoflow.crash.reporter.utils;
 
 /**
- * Created by bali on 02/08/17.
- */
-
-/**
  * An Exception indicating that the Crash Reporter has not been correctly initialized.
  */
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class CrashReporterNotInitializedException extends CrashReporterException
 {
     static final long serialVersionUID = 1;

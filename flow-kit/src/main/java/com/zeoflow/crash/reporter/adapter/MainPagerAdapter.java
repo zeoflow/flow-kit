@@ -1,5 +1,6 @@
 package com.zeoflow.crash.reporter.adapter;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -7,16 +8,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.zeoflow.crash.reporter.ui.CrashLogFragment;
 import com.zeoflow.crash.reporter.ui.ExceptionLogFragment;
 
-/**
- * Created by bali on 11/08/17.
- */
-
 public class MainPagerAdapter extends FragmentPagerAdapter
 {
 
     private CrashLogFragment crashLogFragment;
     private ExceptionLogFragment exceptionLogFragment;
-    private String[] titles;
+    private final String[] titles;
 
     public MainPagerAdapter(FragmentManager fm, String[] titles)
     {
@@ -24,6 +21,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter
         this.titles = titles;
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position)
     {

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Objects;
 
 import static com.zeoflow.crash.reporter.utils.Constants.EXCEPTION_SUFFIX;
 
@@ -71,7 +72,6 @@ public class CrashLogFragment extends Fragment
         }
     }
 
-
     private ArrayList<File> getAllCrashes()
     {
         String directoryPath;
@@ -89,7 +89,7 @@ public class CrashLogFragment extends Fragment
         {
             throw new RuntimeException("The path provided doesn't exists : " + directoryPath);
         }
-        ArrayList<File> listOfFiles = new ArrayList<>(Arrays.asList(directory.listFiles()));
+        ArrayList<File> listOfFiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(directory.listFiles())));
         for (Iterator<File> iterator = listOfFiles.iterator(); iterator.hasNext(); )
         {
             if (iterator.next().getName().contains(EXCEPTION_SUFFIX))

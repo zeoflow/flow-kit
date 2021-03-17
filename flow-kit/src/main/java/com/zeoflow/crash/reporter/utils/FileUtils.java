@@ -7,10 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-/**
- * Created by bali on 10/08/17.
- */
-
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class FileUtils
 {
 
@@ -32,6 +29,7 @@ public class FileUtils
         return delete(file);
     }
 
+    @SuppressWarnings("ConstantConditions")
     public static boolean delete(File file)
     {
         if (!exists(file))
@@ -47,9 +45,9 @@ public class FileUtils
         boolean result = true;
         File[] files = file.listFiles();
         if (files == null) return false;
-        for (int index = 0; index < files.length; index++)
+        for (File value : files)
         {
-            result |= delete(files[index]);
+            result |= delete(value);
         }
         result |= file.delete();
 
@@ -71,19 +69,19 @@ public class FileUtils
         {
             File file = new File(absPath);
             absPath = file.getCanonicalPath();
-        } catch (Exception e)
+        } catch (Exception ignored)
         {
 
         }
         return absPath;
     }
 
-    public final static String getParent(File file)
+    public static String getParent(File file)
     {
         return file == null ? null : file.getParent();
     }
 
-    public final static String getParent(String absPath)
+    public static String getParent(String absPath)
     {
         if (TextUtils.isEmpty(absPath))
         {

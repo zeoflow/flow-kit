@@ -6,7 +6,6 @@ import static com.zeoflow.core.manage.PlatformInfo.getAppVersion;
 import static com.zeoflow.core.manage.PlatformInfo.getDeviceID;
 import static com.zeoflow.core.manage.PlatformInfo.timeZone;
 
-
 public class AppUtils
 {
 

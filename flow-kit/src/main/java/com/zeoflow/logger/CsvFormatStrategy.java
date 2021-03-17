@@ -11,14 +11,17 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
 
 import static com.zeoflow.core.utils.Preconditions.checkNotNull;
+import static com.zeoflow.initializer.ZeoFlowApp.getContext;
 
 /**
  * CSV formatted file logging for Android.
  * Writes to CSV the following data:
  * epoch timestamp, ISO8601 timestamp (human-readable), log level, tag, log message.
  */
+@SuppressWarnings({"unchecked", "RedundantSuppression"})
 public class CsvFormatStrategy implements FormatStrategy
 {
 
@@ -102,6 +105,7 @@ public class CsvFormatStrategy implements FormatStrategy
         return this.tag;
     }
 
+    @SuppressWarnings({"unused", "RedundantSuppression"})
     public static final class Builder
     {
         private static final int MAX_BYTES = 500 * 1024; // 500K averages to a 4000 lines per file
@@ -152,11 +156,11 @@ public class CsvFormatStrategy implements FormatStrategy
             }
             if (dateFormat == null)
             {
-                dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss.SSS", Locale.UK);
+                dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.UK);
             }
             if (logStrategy == null)
             {
-                String diskPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+                String diskPath = Objects.requireNonNull(getContext().getExternalFilesDir(null)).getAbsolutePath();
                 String folder = diskPath + File.separatorChar + "logger";
 
                 HandlerThread ht = new HandlerThread("AndroidFileLogger." + folder);

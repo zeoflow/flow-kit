@@ -19,8 +19,7 @@ import com.zeoflow.material.elements.tabs.TabLayout;
 
 import java.io.File;
 
-import static com.zeoflow.crash.reporter.utils.Constants.CRASH_REPORTER_NOTIFICATION_ID;
-import static com.zeoflow.crash.reporter.utils.Constants.LANDING;
+import static com.zeoflow.crash.reporter.utils.Constants.*;
 
 public class CrashReporterActivity extends Activity
 {

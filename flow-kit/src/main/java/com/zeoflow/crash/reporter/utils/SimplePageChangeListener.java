@@ -2,10 +2,6 @@ package com.zeoflow.crash.reporter.utils;
 
 import androidx.viewpager.widget.ViewPager;
 
-/**
- * Created by bali on 11/08/17.
- */
-
 public abstract class SimplePageChangeListener implements ViewPager.OnPageChangeListener
 {
     @Override
