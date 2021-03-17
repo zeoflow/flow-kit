@@ -15,6 +15,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:textColor="@color/zf_cr_black"
+        android:fontFamily="@font/font"
         android:textSize="16sp" />
 
     <TextView
@@ -26,6 +27,7 @@
         android:orientation="vertical"
         android:padding="5dp"
         android:layout_marginLeft="10dp"
+        android:fontFamily="@font/font"
         android:layout_marginStart="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"

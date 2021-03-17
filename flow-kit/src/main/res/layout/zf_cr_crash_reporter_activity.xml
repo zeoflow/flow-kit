@@ -27,6 +27,7 @@
                 android:text="Crash Log"
                 android:textAllCaps="true"
                 android:textColor="#fff"
+                android:fontFamily="@font/font"
                 android:textSize="16sp" />
 
             <com.zeoflow.material.elements.imageview.ShapeableImageView
