@@ -26,14 +26,14 @@ public class NotificationService extends Service
     {
         if (intent.getAction() != null)
         {
-            if (intent.getAction().equals(ACTION_CR_ZF_DELETE))
+            if (intent.getAction().equals("DELETE_ACTION_CR_ZF"))
             {
                 if (FileUtils.delete(intent.getStringExtra("LogMessage")))
                 {
                     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    notificationManager.cancel(CRASH_REPORTER_NOTIFICATION_ID);
+                    notificationManager.cancel(8102020);
                 }
-            } else if (intent.getAction().equals(ACTION_CR_ZF_SHARE))
+            } else if (intent.getAction().equals("SHARE_ACTION_CR_ZF"))
             {
                 Intent intentShare = new Intent(Intent.ACTION_SEND);
                 intentShare.setType("*/*");

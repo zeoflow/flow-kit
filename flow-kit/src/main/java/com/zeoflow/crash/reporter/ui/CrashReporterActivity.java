@@ -34,7 +34,7 @@ public class CrashReporterActivity extends Activity
         setContentView(R.layout.zf_cr_crash_reporter_activity);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(CRASH_REPORTER_NOTIFICATION_ID);
+        notificationManager.cancel(8102020);
 
         ViewPager viewPager = findViewById(R.id.viewpager);
         if (viewPager != null)
@@ -81,7 +81,7 @@ public class CrashReporterActivity extends Activity
         });
 
         Intent intent = getIntent();
-        if (intent != null && !intent.getBooleanExtra(LANDING, false))
+        if (intent != null && !intent.getBooleanExtra("landing", false))
         {
             selectedTabPosition = 0;
         }

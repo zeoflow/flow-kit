@@ -99,7 +99,7 @@ public class ExceptionLogFragment extends Fragment
         ArrayList<File> listOfFiles = new ArrayList<>(Arrays.asList(Objects.requireNonNull(directory.listFiles())));
         for (Iterator<File> iterator = listOfFiles.iterator(); iterator.hasNext(); )
         {
-            if (iterator.next().getName().contains(CRASH_PREFIX))
+            if (iterator.next().getName().contains("crash_"))
             {
                 iterator.remove();
             }
