@@ -1,9 +1,5 @@
 package com.zeoflow.crash.reporter.utils;
 
-/**
- * Created by bali on 15/08/17.
- */
-
 public class Constants
 {
     public static final String EXCEPTION_SUFFIX = "_exception";

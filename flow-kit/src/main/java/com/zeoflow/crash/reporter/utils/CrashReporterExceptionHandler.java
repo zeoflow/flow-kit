@@ -1,9 +1,11 @@
 package com.zeoflow.crash.reporter.utils;
 
+import androidx.annotation.NonNull;
+
 public class CrashReporterExceptionHandler implements Thread.UncaughtExceptionHandler
 {
 
-    private Thread.UncaughtExceptionHandler exceptionHandler;
+    private final Thread.UncaughtExceptionHandler exceptionHandler;
 
     public CrashReporterExceptionHandler()
     {
@@ -11,11 +13,9 @@ public class CrashReporterExceptionHandler implements Thread.UncaughtExceptionHa
     }
 
     @Override
-    public void uncaughtException(Thread thread, Throwable throwable)
+    public void uncaughtException(@NonNull Thread thread, @NonNull Throwable throwable)
     {
-
         CrashUtil.saveCrashReport(throwable);
-
         exceptionHandler.uncaughtException(thread, throwable);
     }
 }

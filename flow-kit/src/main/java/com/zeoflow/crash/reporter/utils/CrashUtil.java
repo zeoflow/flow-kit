@@ -31,10 +31,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
-import static com.zeoflow.crash.reporter.utils.Constants.ACTION_CR_ZF_DELETE;
-import static com.zeoflow.crash.reporter.utils.Constants.CHANNEL_NOTIFICATION_ID;
+import static com.zeoflow.crash.reporter.utils.Constants.*;
 import static com.zeoflow.initializer.ZeoFlowApp.getContext;
 
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class CrashUtil extends Entity
 {
 
@@ -47,13 +47,13 @@ public class CrashUtil extends Entity
 
     private static String getCrashLogTime()
     {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.getDefault());
         return dateFormat.format(new Date());
     }
 
     private static String getFileName()
     {
-        return Constants.CRASH_PREFIX + getCrashLogTime() + Constants.FILE_EXTENSION;
+        return CRASH_PREFIX + getCrashLogTime() + FILE_EXTENSION;
     }
 
     public static void saveCrashReport(final Throwable throwable)
@@ -128,7 +128,7 @@ public class CrashUtil extends Entity
             builder.setColor(ContextCompat.getColor(context, R.color.zf_cr_colorAccent_CrashReporter));
 
             Intent intent = CrashReporter.getLaunchIntent();
-            intent.putExtra(Constants.LANDING, isCrash);
+            intent.putExtra(LANDING, isCrash);
             intent.setAction(Long.toString(System.currentTimeMillis()));
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
             builder.setContentIntent(pendingIntent);
@@ -170,7 +170,7 @@ public class CrashUtil extends Entity
                 builder.addAction(R.drawable.zf_cr_ic_warning_black_24dp, "Share", shareActionPending);
             }
 
-            notificationManager.notify(Constants.CRASH_REPORTER_NOTIFICATION_ID, builder.build());
+            notificationManager.notify(CRASH_REPORTER_NOTIFICATION_ID, builder.build());
         }
     }
 
@@ -199,7 +199,7 @@ public class CrashUtil extends Entity
     public static String getDefaultPath()
     {
         String defaultPath = Objects.requireNonNull(getContext().getExternalFilesDir(null)).getAbsolutePath()
-            + File.separator + Constants.CRASH_REPORT_DIR;
+            + File.separator + CRASH_REPORT_DIR;
 
         File file = new File(defaultPath);
         boolean isDirectoryCreated = file.mkdirs();

@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.zeoflow.app.Activity;
 import com.zeoflow.flow.kit.R;
 import com.zeoflow.annotation.NonNull;
-import com.zeoflow.annotation.NotNull;
 import com.zeoflow.crash.reporter.utils.AppUtils;
 import com.zeoflow.crash.reporter.utils.FileUtils;
 import com.zeoflow.stylar.AbstractStylarPlugin;
@@ -21,7 +20,7 @@ import com.zeoflow.stylar.view.StylarView;
 
 import java.io.File;
 
-import static com.zeoflow.crash.reporter.utils.Constants.CRASH_REPORTER_NOTIFICATION_ID;
+import static com.zeoflow.crash.reporter.utils.Constants.*;
 
 public class LogMessageActivity extends Activity
 {
@@ -92,7 +91,7 @@ public class LogMessageActivity extends Activity
             .usePlugin(new AbstractStylarPlugin()
             {
                 @Override
-                public void configureTheme(@NotNull @NonNull StylarTheme.Builder builder)
+                public void configureTheme(@NonNull StylarTheme.Builder builder)
                 {
                     builder
                         .codeTextColor(Color.parseColor("#CE570CC1"))

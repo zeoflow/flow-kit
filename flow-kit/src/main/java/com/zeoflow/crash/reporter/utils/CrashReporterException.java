@@ -1,5 +1,9 @@
 package com.zeoflow.crash.reporter.utils;
 
+import androidx.annotation.NonNull;
+
+import java.util.Objects;
+
 public class CrashReporterException extends RuntimeException
 {
     static final long serialVersionUID = 1;
@@ -54,11 +58,12 @@ public class CrashReporterException extends RuntimeException
         super(throwable);
     }
 
+    @NonNull
     @Override
     public String toString()
     {
         // Throwable.toString() returns "CrashReporterException:{message}". Returning just "{message}"
         // should be fine here.
-        return getMessage();
+        return Objects.requireNonNull(getMessage());
     }
 }
