@@ -68,95 +68,62 @@ import java.util.List;
  * });
  * </pre>
  */
-public final class Palette {
-
-    /**
-     * Listener to be used with {@link #generateAsync(Bitmap, PaletteAsyncListener)} or
-     * {@link #generateAsync(Bitmap, int, PaletteAsyncListener)}
-     */
-    public interface PaletteAsyncListener {
-
-        /**
-         * Called when the {@link Palette} has been generated. {@code null} will be passed when an
-         * error occurred during generation.
-         */
-        void onGenerated(@Nullable Palette palette);
-    }
+public final class Palette
+{
 
     static final int DEFAULT_RESIZE_BITMAP_AREA = 112 * 112;
     static final int DEFAULT_CALCULATE_NUMBER_COLORS = 16;
-
     static final float MIN_CONTRAST_TITLE_TEXT = 3.0f;
     static final float MIN_CONTRAST_BODY_TEXT = 4.5f;
-
     static final String LOG_TAG = "Palette";
     static final boolean LOG_TIMINGS = false;
-
     /**
-     * Start generating a {@link Palette} with the returned {@link Builder} instance.
+     * The default filter.
      */
-    @NonNull
-    public static Builder from(@NonNull Bitmap bitmap) {
-        return new Builder(bitmap);
-    }
+    static final Filter DEFAULT_FILTER = new Filter()
+    {
+        private static final float BLACK_MAX_LIGHTNESS = 0.05f;
+        private static final float WHITE_MIN_LIGHTNESS = 0.95f;
 
-    /**
-     * Generate a {@link Palette} from the pre-generated list of {@link Swatch} swatches.
-     * This is useful for testing, or if you want to resurrect a {@link Palette} instance from a
-     * list of swatches. Will return null if the {@code swatches} is null.
-     */
-    @NonNull
-    public static Palette from(@NonNull List<Swatch> swatches) {
-        return new Builder(swatches).generate();
-    }
+        @Override
+        public boolean isAllowed(int rgb, float[] hsl)
+        {
+            return !isWhite(hsl) && !isBlack(hsl) && !isNearRedILine(hsl);
+        }
 
-    /**
-     * @deprecated Use {@link Builder} to generate the Palette.
-     */
-    @NonNull
-    @Deprecated
-    public static Palette generate(@NonNull Bitmap bitmap) {
-        return from(bitmap).generate();
-    }
+        /**
+         * @return true if the color represents a color which is close to black.
+         */
+        private boolean isBlack(float[] hslColor)
+        {
+            return hslColor[2] <= BLACK_MAX_LIGHTNESS;
+        }
 
-    /**
-     * @deprecated Use {@link Builder} to generate the Palette.
-     */
-    @NonNull
-    @Deprecated
-    public static Palette generate(@NonNull Bitmap bitmap, int numColors) {
-        return from(bitmap).maximumColorCount(numColors).generate();
-    }
+        /**
+         * @return true if the color represents a color which is close to white.
+         */
+        private boolean isWhite(float[] hslColor)
+        {
+            return hslColor[2] >= WHITE_MIN_LIGHTNESS;
+        }
 
-    /**
-     * @deprecated Use {@link Builder} to generate the Palette.
-     */
-    @NonNull
-    @Deprecated
-    public static android.os.AsyncTask<Bitmap, Void, Palette> generateAsync(
-            @NonNull Bitmap bitmap, @NonNull PaletteAsyncListener listener) {
-        return from(bitmap).generate(listener);
-    }
-
-    /**
-     * @deprecated Use {@link Builder} to generate the Palette.
-     */
-    @NonNull
-    @Deprecated
-    public static android.os.AsyncTask<Bitmap, Void, Palette> generateAsync(
-            @NonNull Bitmap bitmap, int numColors, @NonNull PaletteAsyncListener listener) {
-        return from(bitmap).maximumColorCount(numColors).generate(listener);
-    }
-
+        /**
+         * @return true if the color lies close to the red side of the I line.
+         */
+        private boolean isNearRedILine(float[] hslColor)
+        {
+            return hslColor[0] >= 10f && hslColor[0] <= 37f && hslColor[1] <= 0.82f;
+        }
+    };
     private final List<Swatch> mSwatches;
     private final List<Target> mTargets;
-
     private final SimpleArrayMap<Target, Swatch> mSelectedSwatches;
     private final SparseBooleanArray mUsedColors;
+    @Nullable
+    private final Swatch mDominantSwatch;
 
-    @Nullable private final Swatch mDominantSwatch;
-
-    Palette(List<Swatch> swatches, List<Target> targets) {
+    Palette(List<Swatch> swatches, List<Target> targets)
+    {
         mSwatches = swatches;
         mTargets = targets;
 
@@ -165,12 +132,68 @@ public final class Palette {
 
         mDominantSwatch = findDominantSwatch();
     }
-
+    /**
+     * Start generating a {@link Palette} with the returned {@link Builder} instance.
+     */
+    @NonNull
+    public static Builder from(@NonNull Bitmap bitmap)
+    {
+        return new Builder(bitmap);
+    }
+    /**
+     * Generate a {@link Palette} from the pre-generated list of {@link Swatch} swatches.
+     * This is useful for testing, or if you want to resurrect a {@link Palette} instance from a
+     * list of swatches. Will return null if the {@code swatches} is null.
+     */
+    @NonNull
+    public static Palette from(@NonNull List<Swatch> swatches)
+    {
+        return new Builder(swatches).generate();
+    }
+    /**
+     * @deprecated Use {@link Builder} to generate the Palette.
+     */
+    @NonNull
+    @Deprecated
+    public static Palette generate(@NonNull Bitmap bitmap)
+    {
+        return from(bitmap).generate();
+    }
+    /**
+     * @deprecated Use {@link Builder} to generate the Palette.
+     */
+    @NonNull
+    @Deprecated
+    public static Palette generate(@NonNull Bitmap bitmap, int numColors)
+    {
+        return from(bitmap).maximumColorCount(numColors).generate();
+    }
+    /**
+     * @deprecated Use {@link Builder} to generate the Palette.
+     */
+    @NonNull
+    @Deprecated
+    public static android.os.AsyncTask<Bitmap, Void, Palette> generateAsync(
+            @NonNull Bitmap bitmap, @NonNull PaletteAsyncListener listener)
+    {
+        return from(bitmap).generate(listener);
+    }
+    /**
+     * @deprecated Use {@link Builder} to generate the Palette.
+     */
+    @NonNull
+    @Deprecated
+    public static android.os.AsyncTask<Bitmap, Void, Palette> generateAsync(
+            @NonNull Bitmap bitmap, int numColors, @NonNull PaletteAsyncListener listener)
+    {
+        return from(bitmap).maximumColorCount(numColors).generate(listener);
+    }
     /**
      * Returns all of the swatches which make up the palette.
      */
     @NonNull
-    public List<Swatch> getSwatches() {
+    public List<Swatch> getSwatches()
+    {
         return Collections.unmodifiableList(mSwatches);
     }
 
@@ -178,7 +201,8 @@ public final class Palette {
      * Returns the targets used to generate this palette.
      */
     @NonNull
-    public List<Target> getTargets() {
+    public List<Target> getTargets()
+    {
         return Collections.unmodifiableList(mTargets);
     }
 
@@ -188,7 +212,8 @@ public final class Palette {
      * @see Target#VIBRANT
      */
     @Nullable
-    public Swatch getVibrantSwatch() {
+    public Swatch getVibrantSwatch()
+    {
         return getSwatchForTarget(Target.VIBRANT);
     }
 
@@ -198,7 +223,8 @@ public final class Palette {
      * @see Target#LIGHT_VIBRANT
      */
     @Nullable
-    public Swatch getLightVibrantSwatch() {
+    public Swatch getLightVibrantSwatch()
+    {
         return getSwatchForTarget(Target.LIGHT_VIBRANT);
     }
 
@@ -208,7 +234,8 @@ public final class Palette {
      * @see Target#DARK_VIBRANT
      */
     @Nullable
-    public Swatch getDarkVibrantSwatch() {
+    public Swatch getDarkVibrantSwatch()
+    {
         return getSwatchForTarget(Target.DARK_VIBRANT);
     }
 
@@ -218,7 +245,8 @@ public final class Palette {
      * @see Target#MUTED
      */
     @Nullable
-    public Swatch getMutedSwatch() {
+    public Swatch getMutedSwatch()
+    {
         return getSwatchForTarget(Target.MUTED);
     }
 
@@ -228,7 +256,8 @@ public final class Palette {
      * @see Target#LIGHT_MUTED
      */
     @Nullable
-    public Swatch getLightMutedSwatch() {
+    public Swatch getLightMutedSwatch()
+    {
         return getSwatchForTarget(Target.LIGHT_MUTED);
     }
 
@@ -238,7 +267,8 @@ public final class Palette {
      * @see Target#DARK_MUTED
      */
     @Nullable
-    public Swatch getDarkMutedSwatch() {
+    public Swatch getDarkMutedSwatch()
+    {
         return getSwatchForTarget(Target.DARK_MUTED);
     }
 
@@ -246,10 +276,12 @@ public final class Palette {
      * Returns the most vibrant color in the palette as an RGB packed int.
      *
      * @param defaultColor value to return if the swatch isn't available
+     *
      * @see #getVibrantSwatch()
      */
     @ColorInt
-    public int getVibrantColor(@ColorInt final int defaultColor) {
+    public int getVibrantColor(@ColorInt final int defaultColor)
+    {
         return getColorForTarget(Target.VIBRANT, defaultColor);
     }
 
@@ -257,10 +289,12 @@ public final class Palette {
      * Returns a light and vibrant color from the palette as an RGB packed int.
      *
      * @param defaultColor value to return if the swatch isn't available
+     *
      * @see #getLightVibrantSwatch()
      */
     @ColorInt
-    public int getLightVibrantColor(@ColorInt final int defaultColor) {
+    public int getLightVibrantColor(@ColorInt final int defaultColor)
+    {
         return getColorForTarget(Target.LIGHT_VIBRANT, defaultColor);
     }
 
@@ -268,10 +302,12 @@ public final class Palette {
      * Returns a dark and vibrant color from the palette as an RGB packed int.
      *
      * @param defaultColor value to return if the swatch isn't available
+     *
      * @see #getDarkVibrantSwatch()
      */
     @ColorInt
-    public int getDarkVibrantColor(@ColorInt final int defaultColor) {
+    public int getDarkVibrantColor(@ColorInt final int defaultColor)
+    {
         return getColorForTarget(Target.DARK_VIBRANT, defaultColor);
     }
 
@@ -279,10 +315,12 @@ public final class Palette {
      * Returns a muted color from the palette as an RGB packed int.
      *
      * @param defaultColor value to return if the swatch isn't available
+     *
      * @see #getMutedSwatch()
      */
     @ColorInt
-    public int getMutedColor(@ColorInt final int defaultColor) {
+    public int getMutedColor(@ColorInt final int defaultColor)
+    {
         return getColorForTarget(Target.MUTED, defaultColor);
     }
 
@@ -290,10 +328,12 @@ public final class Palette {
      * Returns a muted and light color from the palette as an RGB packed int.
      *
      * @param defaultColor value to return if the swatch isn't available
+     *
      * @see #getLightMutedSwatch()
      */
     @ColorInt
-    public int getLightMutedColor(@ColorInt final int defaultColor) {
+    public int getLightMutedColor(@ColorInt final int defaultColor)
+    {
         return getColorForTarget(Target.LIGHT_MUTED, defaultColor);
     }
 
@@ -301,10 +341,12 @@ public final class Palette {
      * Returns a muted and dark color from the palette as an RGB packed int.
      *
      * @param defaultColor value to return if the swatch isn't available
+     *
      * @see #getDarkMutedSwatch()
      */
     @ColorInt
-    public int getDarkMutedColor(@ColorInt final int defaultColor) {
+    public int getDarkMutedColor(@ColorInt final int defaultColor)
+    {
         return getColorForTarget(Target.DARK_MUTED, defaultColor);
     }
 
@@ -313,7 +355,8 @@ public final class Palette {
      * could not be found.
      */
     @Nullable
-    public Swatch getSwatchForTarget(@NonNull final Target target) {
+    public Swatch getSwatchForTarget(@NonNull final Target target)
+    {
         return mSelectedSwatches.get(target);
     }
 
@@ -323,7 +366,8 @@ public final class Palette {
      * @param defaultColor value to return if the swatch isn't available
      */
     @ColorInt
-    public int getColorForTarget(@NonNull final Target target, @ColorInt final int defaultColor) {
+    public int getColorForTarget(@NonNull final Target target, @ColorInt final int defaultColor)
+    {
         Swatch swatch = getSwatchForTarget(target);
         return swatch != null ? swatch.getRgb() : defaultColor;
     }
@@ -335,7 +379,8 @@ public final class Palette {
      * within the palette.</p>
      */
     @Nullable
-    public Swatch getDominantSwatch() {
+    public Swatch getDominantSwatch()
+    {
         return mDominantSwatch;
     }
 
@@ -343,18 +388,23 @@ public final class Palette {
      * Returns the color of the dominant swatch from the palette, as an RGB packed int.
      *
      * @param defaultColor value to return if the swatch isn't available
+     *
      * @see #getDominantSwatch()
      */
     @ColorInt
-    public int getDominantColor(@ColorInt int defaultColor) {
+    public int getDominantColor(@ColorInt int defaultColor)
+    {
         return mDominantSwatch != null ? mDominantSwatch.getRgb() : defaultColor;
     }
 
-    @SuppressWarnings("NullAway") // TODO(b/141959297): Suppressed during upgrade to AGP 3.6.
-    void generate() {
+    @SuppressWarnings("NullAway")
+        // TODO(b/141959297): Suppressed during upgrade to AGP 3.6.
+    void generate()
+    {
         // We need to make sure that the scored targets are generated first. This is so that
         // inherited targets have something to inherit from
-        for (int i = 0, count = mTargets.size(); i < count; i++) {
+        for (int i = 0, count = mTargets.size(); i < count; i++)
+        {
             final Target target = mTargets.get(i);
             target.normalizeWeights();
             mSelectedSwatches.put(target, generateScoredTarget(target));
@@ -364,9 +414,11 @@ public final class Palette {
     }
 
     @Nullable
-    private Swatch generateScoredTarget(final Target target) {
+    private Swatch generateScoredTarget(final Target target)
+    {
         final Swatch maxScoreSwatch = getMaxScoredSwatchForTarget(target);
-        if (maxScoreSwatch != null && target.isExclusive()) {
+        if (maxScoreSwatch != null && target.isExclusive())
+        {
             // If we have a swatch, and the target is exclusive, add the color to the used list
             mUsedColors.append(maxScoreSwatch.getRgb(), true);
         }
@@ -374,14 +426,18 @@ public final class Palette {
     }
 
     @Nullable
-    private Swatch getMaxScoredSwatchForTarget(final Target target) {
+    private Swatch getMaxScoredSwatchForTarget(final Target target)
+    {
         float maxScore = 0;
         Swatch maxScoreSwatch = null;
-        for (int i = 0, count = mSwatches.size(); i < count; i++) {
+        for (int i = 0, count = mSwatches.size(); i < count; i++)
+        {
             final Swatch swatch = mSwatches.get(i);
-            if (shouldBeScoredForTarget(swatch, target)) {
+            if (shouldBeScoredForTarget(swatch, target))
+            {
                 final float score = generateScore(swatch, target);
-                if (maxScoreSwatch == null || score > maxScore) {
+                if (maxScoreSwatch == null || score > maxScore)
+                {
                     maxScoreSwatch = swatch;
                     maxScore = score;
                 }
@@ -390,16 +446,18 @@ public final class Palette {
         return maxScoreSwatch;
     }
 
-    private boolean shouldBeScoredForTarget(final Swatch swatch, final Target target) {
+    private boolean shouldBeScoredForTarget(final Swatch swatch, final Target target)
+    {
         // Check whether the HSL values are within the correct ranges, and this color hasn't
         // been used yet.
-        final float hsl[] = swatch.getHsl();
+        final float[] hsl = swatch.getHsl();
         return hsl[1] >= target.getMinimumSaturation() && hsl[1] <= target.getMaximumSaturation()
                 && hsl[2] >= target.getMinimumLightness() && hsl[2] <= target.getMaximumLightness()
                 && !mUsedColors.get(swatch.getRgb());
     }
 
-    private float generateScore(Swatch swatch, Target target) {
+    private float generateScore(Swatch swatch, Target target)
+    {
         final float[] hsl = swatch.getHsl();
 
         float saturationScore = 0;
@@ -408,15 +466,18 @@ public final class Palette {
 
         final int maxPopulation = mDominantSwatch != null ? mDominantSwatch.getPopulation() : 1;
 
-        if (target.getSaturationWeight() > 0) {
+        if (target.getSaturationWeight() > 0)
+        {
             saturationScore = target.getSaturationWeight()
                     * (1f - Math.abs(hsl[1] - target.getTargetSaturation()));
         }
-        if (target.getLightnessWeight() > 0) {
+        if (target.getLightnessWeight() > 0)
+        {
             luminanceScore = target.getLightnessWeight()
                     * (1f - Math.abs(hsl[2] - target.getTargetLightness()));
         }
-        if (target.getPopulationWeight() > 0) {
+        if (target.getPopulationWeight() > 0)
+        {
             populationScore = target.getPopulationWeight()
                     * (swatch.getPopulation() / (float) maxPopulation);
         }
@@ -425,12 +486,15 @@ public final class Palette {
     }
 
     @Nullable
-    private Swatch findDominantSwatch() {
+    private Swatch findDominantSwatch()
+    {
         int maxPop = Integer.MIN_VALUE;
         Swatch maxSwatch = null;
-        for (int i = 0, count = mSwatches.size(); i < count; i++) {
+        for (int i = 0, count = mSwatches.size(); i < count; i++)
+        {
             Swatch swatch = mSwatches.get(i);
-            if (swatch.getPopulation() > maxPop) {
+            if (swatch.getPopulation() > maxPop)
+            {
                 maxSwatch = swatch;
                 maxPop = swatch.getPopulation();
             }
@@ -439,10 +503,48 @@ public final class Palette {
     }
 
     /**
+     * Listener to be used with {@link #generateAsync(Bitmap, PaletteAsyncListener)} or
+     * {@link #generateAsync(Bitmap, int, PaletteAsyncListener)}
+     */
+    public interface PaletteAsyncListener
+    {
+
+        /**
+         * Called when the {@link Palette} has been generated. {@code null} will be passed when an
+         * error occurred during generation.
+         */
+        void onGenerated(@Nullable Palette palette);
+
+    }
+
+    /**
+     * A Filter provides a mechanism for exercising fine-grained control over which colors
+     * are valid within a resulting {@link Palette}.
+     */
+    public interface Filter
+    {
+
+        /**
+         * Hook to allow clients to be able filter colors from resulting palette.
+         *
+         * @param rgb the color in RGB888.
+         * @param hsl HSL representation of the color.
+         *
+         * @return true if the color is allowed, false if not.
+         *
+         * @see Builder#addFilter(Filter)
+         */
+        boolean isAllowed(@ColorInt int rgb, @NonNull float[] hsl);
+
+    }
+
+    /**
      * Represents a color swatch generated from an image's palette. The RGB color can be retrieved
      * by calling {@link #getRgb()}.
      */
-    public static final class Swatch {
+    public static final class Swatch
+    {
+
         private final int mRed, mGreen, mBlue;
         private final int mRgb;
         private final int mPopulation;
@@ -451,9 +553,11 @@ public final class Palette {
         private int mTitleTextColor;
         private int mBodyTextColor;
 
-        @Nullable private float[] mHsl;
+        @Nullable
+        private float[] mHsl;
 
-        public Swatch(@ColorInt int color, int population) {
+        public Swatch(@ColorInt int color, int population)
+        {
             mRed = Color.red(color);
             mGreen = Color.green(color);
             mBlue = Color.blue(color);
@@ -465,19 +569,22 @@ public final class Palette {
          * @return this swatch's RGB color value
          */
         @ColorInt
-        public int getRgb() {
+        public int getRgb()
+        {
             return mRgb;
         }
 
         /**
          * Return this swatch's HSL values.
-         *     hsv[0] is Hue [0 .. 360)
-         *     hsv[1] is Saturation [0...1]
-         *     hsv[2] is Lightness [0...1]
+         * hsv[0] is Hue [0 .. 360)
+         * hsv[1] is Saturation [0...1]
+         * hsv[2] is Lightness [0...1]
          */
         @NonNull
-        public float[] getHsl() {
-            if (mHsl == null) {
+        public float[] getHsl()
+        {
+            if (mHsl == null)
+            {
                 mHsl = new float[3];
             }
             ColorUtils.RGBToHSL(mRed, mGreen, mBlue, mHsl);
@@ -487,7 +594,8 @@ public final class Palette {
         /**
          * @return the number of pixels represented by this swatch
          */
-        public int getPopulation() {
+        public int getPopulation()
+        {
             return mPopulation;
         }
 
@@ -496,7 +604,8 @@ public final class Palette {
          * {@link Swatch}'s color. This color is guaranteed to have sufficient contrast.
          */
         @ColorInt
-        public int getTitleTextColor() {
+        public int getTitleTextColor()
+        {
             ensureTextColorsGenerated();
             return mTitleTextColor;
         }
@@ -506,20 +615,24 @@ public final class Palette {
          * {@link Swatch}'s color. This color is guaranteed to have sufficient contrast.
          */
         @ColorInt
-        public int getBodyTextColor() {
+        public int getBodyTextColor()
+        {
             ensureTextColorsGenerated();
             return mBodyTextColor;
         }
 
-        private void ensureTextColorsGenerated() {
-            if (!mGeneratedTextColors) {
+        private void ensureTextColorsGenerated()
+        {
+            if (!mGeneratedTextColors)
+            {
                 // First check white, as most colors will be dark
                 final int lightBodyAlpha = ColorUtils.calculateMinimumAlpha(
                         Color.WHITE, mRgb, MIN_CONTRAST_BODY_TEXT);
                 final int lightTitleAlpha = ColorUtils.calculateMinimumAlpha(
                         Color.WHITE, mRgb, MIN_CONTRAST_TITLE_TEXT);
 
-                if (lightBodyAlpha != -1 && lightTitleAlpha != -1) {
+                if (lightBodyAlpha != -1 && lightTitleAlpha != -1)
+                {
                     // If we found valid light values, use them and return
                     mBodyTextColor = ColorUtils.setAlphaComponent(Color.WHITE, lightBodyAlpha);
                     mTitleTextColor = ColorUtils.setAlphaComponent(Color.WHITE, lightTitleAlpha);
@@ -532,7 +645,8 @@ public final class Palette {
                 final int darkTitleAlpha = ColorUtils.calculateMinimumAlpha(
                         Color.BLACK, mRgb, MIN_CONTRAST_TITLE_TEXT);
 
-                if (darkBodyAlpha != -1 && darkTitleAlpha != -1) {
+                if (darkBodyAlpha != -1 && darkTitleAlpha != -1)
+                {
                     // If we found valid dark values, use them and return
                     mBodyTextColor = ColorUtils.setAlphaComponent(Color.BLACK, darkBodyAlpha);
                     mTitleTextColor = ColorUtils.setAlphaComponent(Color.BLACK, darkTitleAlpha);
@@ -554,7 +668,8 @@ public final class Palette {
 
         @NonNull // TODO Remove once AGP 3.3. Fixed by I32b659c4e842ba5ac3d45b2d75b080b810fe1fe8.
         @Override
-        public String toString() {
+        public String toString()
+        {
             return new StringBuilder(getClass().getSimpleName())
                     .append(" [RGB: #").append(Integer.toHexString(getRgb())).append(']')
                     .append(" [HSL: ").append(Arrays.toString(getHsl())).append(']')
@@ -567,11 +682,14 @@ public final class Palette {
 
         @Override
         // TODO Remove @Nullable once AGP 3.3. Fixed by I32b659c4e842ba5ac3d45b2d75b080b810fe1fe8.
-        public boolean equals(@Nullable Object o) {
-            if (this == o) {
+        public boolean equals(@Nullable Object o)
+        {
+            if (this == o)
+            {
                 return true;
             }
-            if (o == null || getClass() != o.getClass()) {
+            if (o == null || getClass() != o.getClass())
+            {
                 return false;
             }
 
@@ -580,32 +698,39 @@ public final class Palette {
         }
 
         @Override
-        public int hashCode() {
+        public int hashCode()
+        {
             return 31 * mRgb + mPopulation;
         }
+
     }
 
     /**
      * Builder class for generating {@link Palette} instances.
      */
-    public static final class Builder {
-        @Nullable private final List<Swatch> mSwatches;
-        @Nullable private final Bitmap mBitmap;
+    public static final class Builder
+    {
+
+        @Nullable
+        private final List<Swatch> mSwatches;
+        @Nullable
+        private final Bitmap mBitmap;
 
         private final List<Target> mTargets = new ArrayList<>();
-
+        private final List<Filter> mFilters = new ArrayList<>();
         private int mMaxColors = DEFAULT_CALCULATE_NUMBER_COLORS;
         private int mResizeArea = DEFAULT_RESIZE_BITMAP_AREA;
         private int mResizeMaxDimension = -1;
-
-        private final List<Filter> mFilters = new ArrayList<>();
-        @Nullable private Rect mRegion;
+        @Nullable
+        private Rect mRegion;
 
         /**
          * Construct a new {@link Builder} using a source {@link Bitmap}
          */
-        public Builder(@NonNull Bitmap bitmap) {
-            if (bitmap == null || bitmap.isRecycled()) {
+        public Builder(@NonNull Bitmap bitmap)
+        {
+            if (bitmap == null || bitmap.isRecycled())
+            {
                 throw new IllegalArgumentException("Bitmap is not valid");
             }
             mFilters.add(DEFAULT_FILTER);
@@ -625,8 +750,10 @@ public final class Palette {
          * Construct a new {@link Builder} using a list of {@link Swatch} instances.
          * Typically only used for testing.
          */
-        public Builder(@NonNull List<Swatch> swatches) {
-            if (swatches == null || swatches.isEmpty()) {
+        public Builder(@NonNull List<Swatch> swatches)
+        {
+            if (swatches == null || swatches.isEmpty())
+            {
                 throw new IllegalArgumentException("List of Swatches is not valid");
             }
             mFilters.add(DEFAULT_FILTER);
@@ -643,7 +770,8 @@ public final class Palette {
          * value should be increased to ~24.
          */
         @NonNull
-        public Builder maximumColorCount(int colors) {
+        public Builder maximumColorCount(int colors)
+        {
             mMaxColors = colors;
             return this;
         }
@@ -654,15 +782,16 @@ public final class Palette {
          * will be resized so that its largest dimension matches {@code maxDimension}. If the
          * bitmap is smaller or equal, the original is used as-is.
          *
-         * @deprecated Using {@link #resizeBitmapArea(int)} is preferred since it can handle
-         * abnormal aspect ratios more gracefully.
-         *
          * @param maxDimension the number of pixels that the max dimension should be scaled down to,
          *                     or any value <= 0 to disable resizing.
+         *
+         * @deprecated Using {@link #resizeBitmapArea(int)} is preferred since it can handle
+         * abnormal aspect ratios more gracefully.
          */
         @NonNull
         @Deprecated
-        public Builder resizeBitmapSize(final int maxDimension) {
+        public Builder resizeBitmapSize(final int maxDimension)
+        {
             mResizeMaxDimension = maxDimension;
             mResizeArea = -1;
             return this;
@@ -682,7 +811,8 @@ public final class Palette {
          *             or any value <= 0 to disable resizing.
          */
         @NonNull
-        public Builder resizeBitmapArea(final int area) {
+        public Builder resizeBitmapArea(final int area)
+        {
             mResizeArea = area;
             mResizeMaxDimension = -1;
             return this;
@@ -693,7 +823,8 @@ public final class Palette {
          * {@link Palette}.
          */
         @NonNull
-        public Builder clearFilters() {
+        public Builder clearFilters()
+        {
             mFilters.clear();
             return this;
         }
@@ -705,8 +836,10 @@ public final class Palette {
          * @param filter filter to add.
          */
         @NonNull
-        public Builder addFilter(@NonNull Filter filter) {
-            if (filter != null) {
+        public Builder addFilter(@NonNull Filter filter)
+        {
+            if (filter != null)
+            {
                 mFilters.add(filter);
             }
             return this;
@@ -716,19 +849,22 @@ public final class Palette {
          * Set a region of the bitmap to be used exclusively when calculating the palette.
          * <p>This only works when the original input is a {@link Bitmap}.</p>
          *
-         * @param left The left side of the rectangle used for the region.
-         * @param top The top of the rectangle used for the region.
-         * @param right The right side of the rectangle used for the region.
+         * @param left   The left side of the rectangle used for the region.
+         * @param top    The top of the rectangle used for the region.
+         * @param right  The right side of the rectangle used for the region.
          * @param bottom The bottom of the rectangle used for the region.
          */
         @NonNull
-        public Builder setRegion(@Px int left, @Px int top, @Px int right, @Px int bottom) {
-            if (mBitmap != null) {
+        public Builder setRegion(@Px int left, @Px int top, @Px int right, @Px int bottom)
+        {
+            if (mBitmap != null)
+            {
                 if (mRegion == null) mRegion = new Rect();
                 // Set the Rect to be initially the whole Bitmap
                 mRegion.set(0, 0, mBitmap.getWidth(), mBitmap.getHeight());
                 // Now just get the intersection with the region
-                if (!mRegion.intersect(left, top, right, bottom)) {
+                if (!mRegion.intersect(left, top, right, bottom))
+                {
                     throw new IllegalArgumentException("The given region must intersect with "
                             + "the Bitmap's dimensions.");
                 }
@@ -740,7 +876,8 @@ public final class Palette {
          * Clear any previously region set via {@link #setRegion(int, int, int, int)}.
          */
         @NonNull
-        public Builder clearRegion() {
+        public Builder clearRegion()
+        {
             mRegion = null;
             return this;
         }
@@ -751,8 +888,10 @@ public final class Palette {
          * <p>You can retrieve the result via {@link Palette#getSwatchForTarget(Target)}.</p>
          */
         @NonNull
-        public Builder addTarget(@NonNull final Target target) {
-            if (!mTargets.contains(target)) {
+        public Builder addTarget(@NonNull final Target target)
+        {
+            if (!mTargets.contains(target))
+            {
                 mTargets.add(target);
             }
             return this;
@@ -763,8 +902,10 @@ public final class Palette {
          * {@link Palette}.
          */
         @NonNull
-        public Builder clearTargets() {
-            if (mTargets != null) {
+        public Builder clearTargets()
+        {
+            if (mTargets != null)
+            {
                 mTargets.clear();
             }
             return this;
@@ -774,17 +915,20 @@ public final class Palette {
          * Generate and return the {@link Palette} synchronously.
          */
         @NonNull
-        public Palette generate() {
+        public Palette generate()
+        {
             List<Swatch> swatches;
 
-            if (mBitmap != null) {
+            if (mBitmap != null)
+            {
                 // We have a Bitmap so we need to use quantization to reduce the number of colors
 
                 // First we'll scale down the bitmap if needed
                 final Bitmap bitmap = scaleBitmapDown(mBitmap);
 
                 final Rect region = mRegion;
-                if (bitmap != mBitmap && region != null) {
+                if (bitmap != mBitmap && region != null)
+                {
                     // If we have a scaled bitmap and a selected region, we need to scale down the
                     // region to match the new scale
                     final double scale = bitmap.getWidth() / (double) mBitmap.getWidth();
@@ -803,15 +947,18 @@ public final class Palette {
                         mFilters.isEmpty() ? null : mFilters.toArray(new Filter[mFilters.size()]));
 
                 // If created a new bitmap, recycle it
-                if (bitmap != mBitmap) {
+                if (bitmap != mBitmap)
+                {
                     bitmap.recycle();
                 }
 
                 swatches = quantizer.getQuantizedColors();
-            } else if (mSwatches != null) {
+            } else if (mSwatches != null)
+            {
                 // Else we're using the provided swatches
                 swatches = mSwatches;
-            } else {
+            } else
+            {
                 // The constructors enforce either a bitmap or swatches are present.
                 throw new AssertionError();
             }
@@ -836,38 +983,47 @@ public final class Palette {
         @NonNull
         @Deprecated
         public android.os.AsyncTask<Bitmap, Void, Palette> generate(
-                @NonNull final PaletteAsyncListener listener) {
+                @NonNull final PaletteAsyncListener listener)
+        {
             Preconditions.checkNotNull(listener);
 
-            return new android.os.AsyncTask<Bitmap, Void, Palette>() {
+            return new android.os.AsyncTask<Bitmap, Void, Palette>()
+            {
                 @Override
                 @Nullable
-                protected Palette doInBackground(Bitmap... params) {
-                    try {
+                protected Palette doInBackground(Bitmap... params)
+                {
+                    try
+                    {
                         return generate();
-                    } catch (Exception e) {
+                    } catch (Exception e)
+                    {
                         Log.e(LOG_TAG, "Exception thrown during async generate", e);
                         return null;
                     }
                 }
 
                 @Override
-                protected void onPostExecute(@Nullable Palette colorExtractor) {
+                protected void onPostExecute(@Nullable Palette colorExtractor)
+                {
                     listener.onGenerated(colorExtractor);
                 }
             }.executeOnExecutor(android.os.AsyncTask.THREAD_POOL_EXECUTOR, mBitmap);
         }
 
-        private int[] getPixelsFromBitmap(Bitmap bitmap) {
+        private int[] getPixelsFromBitmap(Bitmap bitmap)
+        {
             final int bitmapWidth = bitmap.getWidth();
             final int bitmapHeight = bitmap.getHeight();
             final int[] pixels = new int[bitmapWidth * bitmapHeight];
             bitmap.getPixels(pixels, 0, bitmapWidth, 0, 0, bitmapWidth, bitmapHeight);
 
-            if (mRegion == null) {
+            if (mRegion == null)
+            {
                 // If we don't have a region, return all of the pixels
                 return pixels;
-            } else {
+            } else
+            {
                 // If we do have a region, lets create a subset array containing only the region's
                 // pixels
                 final int regionWidth = mRegion.width();
@@ -875,7 +1031,8 @@ public final class Palette {
                 // pixels contains all of the pixels, so we need to iterate through each row and
                 // copy the regions pixels into a new smaller array
                 final int[] subsetPixels = new int[regionWidth * regionHeight];
-                for (int row = 0; row < regionHeight; row++) {
+                for (int row = 0; row < regionHeight; row++)
+                {
                     System.arraycopy(pixels, ((row + mRegion.top) * bitmapWidth) + mRegion.left,
                             subsetPixels, row * regionWidth, regionWidth);
                 }
@@ -886,22 +1043,28 @@ public final class Palette {
         /**
          * Scale the bitmap down as needed.
          */
-        private Bitmap scaleBitmapDown(final Bitmap bitmap) {
+        private Bitmap scaleBitmapDown(final Bitmap bitmap)
+        {
             double scaleRatio = -1;
 
-            if (mResizeArea > 0) {
+            if (mResizeArea > 0)
+            {
                 final int bitmapArea = bitmap.getWidth() * bitmap.getHeight();
-                if (bitmapArea > mResizeArea) {
+                if (bitmapArea > mResizeArea)
+                {
                     scaleRatio = Math.sqrt(mResizeArea / (double) bitmapArea);
                 }
-            } else if (mResizeMaxDimension > 0) {
+            } else if (mResizeMaxDimension > 0)
+            {
                 final int maxDimension = Math.max(bitmap.getWidth(), bitmap.getHeight());
-                if (maxDimension > mResizeMaxDimension) {
+                if (maxDimension > mResizeMaxDimension)
+                {
                     scaleRatio = mResizeMaxDimension / (double) maxDimension;
                 }
             }
 
-            if (scaleRatio <= 0) {
+            if (scaleRatio <= 0)
+            {
                 // Scaling has been disabled or not needed so just return the Bitmap
                 return bitmap;
             }
@@ -911,57 +1074,7 @@ public final class Palette {
                     (int) Math.ceil(bitmap.getHeight() * scaleRatio),
                     false);
         }
+
     }
 
-    /**
-     * A Filter provides a mechanism for exercising fine-grained control over which colors
-     * are valid within a resulting {@link Palette}.
-     */
-    public interface Filter {
-        /**
-         * Hook to allow clients to be able filter colors from resulting palette.
-         *
-         * @param rgb the color in RGB888.
-         * @param hsl HSL representation of the color.
-         *
-         * @return true if the color is allowed, false if not.
-         *
-         * @see Builder#addFilter(Filter)
-         */
-        boolean isAllowed(@ColorInt int rgb, @NonNull float[] hsl);
-    }
-
-    /**
-     * The default filter.
-     */
-    static final Filter DEFAULT_FILTER = new Filter() {
-        private static final float BLACK_MAX_LIGHTNESS = 0.05f;
-        private static final float WHITE_MIN_LIGHTNESS = 0.95f;
-
-        @Override
-        public boolean isAllowed(int rgb, float[] hsl) {
-            return !isWhite(hsl) && !isBlack(hsl) && !isNearRedILine(hsl);
-        }
-
-        /**
-         * @return true if the color represents a color which is close to black.
-         */
-        private boolean isBlack(float[] hslColor) {
-            return hslColor[2] <= BLACK_MAX_LIGHTNESS;
-        }
-
-        /**
-         * @return true if the color represents a color which is close to white.
-         */
-        private boolean isWhite(float[] hslColor) {
-            return hslColor[2] >= WHITE_MIN_LIGHTNESS;
-        }
-
-        /**
-         * @return true if the color lies close to the red side of the I line.
-         */
-        private boolean isNearRedILine(float[] hslColor) {
-            return hslColor[0] >= 10f && hslColor[0] <= 37f && hslColor[1] <= 0.82f;
-        }
-    };
 }

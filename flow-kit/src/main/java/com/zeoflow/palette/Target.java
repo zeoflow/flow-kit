@@ -24,67 +24,61 @@ import androidx.annotation.NonNull;
  * <p>To use the target, use the {@link Palette.Builder#addTarget(Target)} API when building a
  * Palette.</p>
  */
-public final class Target {
-
-    private static final float TARGET_DARK_LUMA = 0.26f;
-    private static final float MAX_DARK_LUMA = 0.45f;
-
-    private static final float MIN_LIGHT_LUMA = 0.55f;
-    private static final float TARGET_LIGHT_LUMA = 0.74f;
-
-    private static final float MIN_NORMAL_LUMA = 0.3f;
-    private static final float TARGET_NORMAL_LUMA = 0.5f;
-    private static final float MAX_NORMAL_LUMA = 0.7f;
-
-    private static final float TARGET_MUTED_SATURATION = 0.3f;
-    private static final float MAX_MUTED_SATURATION = 0.4f;
-
-    private static final float TARGET_VIBRANT_SATURATION = 1f;
-    private static final float MIN_VIBRANT_SATURATION = 0.35f;
-
-    private static final float WEIGHT_SATURATION = 0.24f;
-    private static final float WEIGHT_LUMA = 0.52f;
-    private static final float WEIGHT_POPULATION = 0.24f;
-
-    static final int INDEX_MIN = 0;
-    static final int INDEX_TARGET = 1;
-    static final int INDEX_MAX = 2;
-
-    static final int INDEX_WEIGHT_SAT = 0;
-    static final int INDEX_WEIGHT_LUMA = 1;
-    static final int INDEX_WEIGHT_POP = 2;
+public final class Target
+{
 
     /**
      * A target which has the characteristics of a vibrant color which is light in luminance.
-    */
-    public static final @NonNull Target LIGHT_VIBRANT;
-
+     */
+    public static final @NonNull
+    Target LIGHT_VIBRANT;
     /**
      * A target which has the characteristics of a vibrant color which is neither light or dark.
      */
-    public static final @NonNull Target VIBRANT;
-
+    public static final @NonNull
+    Target VIBRANT;
     /**
      * A target which has the characteristics of a vibrant color which is dark in luminance.
      */
-    public static final @NonNull Target DARK_VIBRANT;
-
+    public static final @NonNull
+    Target DARK_VIBRANT;
     /**
      * A target which has the characteristics of a muted color which is light in luminance.
      */
-    public static final @NonNull Target LIGHT_MUTED;
-
+    public static final @NonNull
+    Target LIGHT_MUTED;
     /**
      * A target which has the characteristics of a muted color which is neither light or dark.
      */
-    public static final @NonNull Target MUTED;
-
+    public static final @NonNull
+    Target MUTED;
     /**
      * A target which has the characteristics of a muted color which is dark in luminance.
      */
-    public static final @NonNull Target DARK_MUTED;
-
-    static {
+    public static final @NonNull
+    Target DARK_MUTED;
+    static final int INDEX_MIN = 0;
+    static final int INDEX_TARGET = 1;
+    static final int INDEX_MAX = 2;
+    static final int INDEX_WEIGHT_SAT = 0;
+    static final int INDEX_WEIGHT_LUMA = 1;
+    static final int INDEX_WEIGHT_POP = 2;
+    private static final float TARGET_DARK_LUMA = 0.26f;
+    private static final float MAX_DARK_LUMA = 0.45f;
+    private static final float MIN_LIGHT_LUMA = 0.55f;
+    private static final float TARGET_LIGHT_LUMA = 0.74f;
+    private static final float MIN_NORMAL_LUMA = 0.3f;
+    private static final float TARGET_NORMAL_LUMA = 0.5f;
+    private static final float MAX_NORMAL_LUMA = 0.7f;
+    private static final float TARGET_MUTED_SATURATION = 0.3f;
+    private static final float MAX_MUTED_SATURATION = 0.4f;
+    private static final float TARGET_VIBRANT_SATURATION = 1f;
+    private static final float MIN_VIBRANT_SATURATION = 0.35f;
+    private static final float WEIGHT_SATURATION = 0.24f;
+    private static final float WEIGHT_LUMA = 0.52f;
+    private static final float WEIGHT_POPULATION = 0.24f;
+    static
+    {
         LIGHT_VIBRANT = new Target();
         setDefaultLightLightnessValues(LIGHT_VIBRANT);
         setDefaultVibrantSaturationValues(LIGHT_VIBRANT);
@@ -115,68 +109,101 @@ public final class Target {
     final float[] mWeights = new float[3];
     boolean mIsExclusive = true; // default to true
 
-    Target() {
+    Target()
+    {
         setTargetDefaultValues(mSaturationTargets);
         setTargetDefaultValues(mLightnessTargets);
         setDefaultWeights();
     }
 
-    Target(@NonNull Target from) {
+    Target(@NonNull Target from)
+    {
         System.arraycopy(from.mSaturationTargets, 0, mSaturationTargets, 0,
                 mSaturationTargets.length);
         System.arraycopy(from.mLightnessTargets, 0, mLightnessTargets, 0,
                 mLightnessTargets.length);
         System.arraycopy(from.mWeights, 0, mWeights, 0, mWeights.length);
     }
-
+    private static void setTargetDefaultValues(final float[] values)
+    {
+        values[INDEX_MIN] = 0f;
+        values[INDEX_TARGET] = 0.5f;
+        values[INDEX_MAX] = 1f;
+    }
+    private static void setDefaultDarkLightnessValues(Target target)
+    {
+        target.mLightnessTargets[INDEX_TARGET] = TARGET_DARK_LUMA;
+        target.mLightnessTargets[INDEX_MAX] = MAX_DARK_LUMA;
+    }
+    private static void setDefaultNormalLightnessValues(Target target)
+    {
+        target.mLightnessTargets[INDEX_MIN] = MIN_NORMAL_LUMA;
+        target.mLightnessTargets[INDEX_TARGET] = TARGET_NORMAL_LUMA;
+        target.mLightnessTargets[INDEX_MAX] = MAX_NORMAL_LUMA;
+    }
+    private static void setDefaultLightLightnessValues(Target target)
+    {
+        target.mLightnessTargets[INDEX_MIN] = MIN_LIGHT_LUMA;
+        target.mLightnessTargets[INDEX_TARGET] = TARGET_LIGHT_LUMA;
+    }
+    private static void setDefaultVibrantSaturationValues(Target target)
+    {
+        target.mSaturationTargets[INDEX_MIN] = MIN_VIBRANT_SATURATION;
+        target.mSaturationTargets[INDEX_TARGET] = TARGET_VIBRANT_SATURATION;
+    }
+    private static void setDefaultMutedSaturationValues(Target target)
+    {
+        target.mSaturationTargets[INDEX_TARGET] = TARGET_MUTED_SATURATION;
+        target.mSaturationTargets[INDEX_MAX] = MAX_MUTED_SATURATION;
+    }
     /**
      * The minimum saturation value for this target.
      */
     @FloatRange(from = 0, to = 1)
-    public float getMinimumSaturation() {
+    public float getMinimumSaturation()
+    {
         return mSaturationTargets[INDEX_MIN];
     }
-
     /**
      * The target saturation value for this target.
      */
     @FloatRange(from = 0, to = 1)
-    public float getTargetSaturation() {
+    public float getTargetSaturation()
+    {
         return mSaturationTargets[INDEX_TARGET];
     }
-
     /**
      * The maximum saturation value for this target.
      */
     @FloatRange(from = 0, to = 1)
-    public float getMaximumSaturation() {
+    public float getMaximumSaturation()
+    {
         return mSaturationTargets[INDEX_MAX];
     }
-
     /**
      * The minimum lightness value for this target.
      */
     @FloatRange(from = 0, to = 1)
-    public float getMinimumLightness() {
+    public float getMinimumLightness()
+    {
         return mLightnessTargets[INDEX_MIN];
     }
-
     /**
      * The target lightness value for this target.
      */
     @FloatRange(from = 0, to = 1)
-    public float getTargetLightness() {
+    public float getTargetLightness()
+    {
         return mLightnessTargets[INDEX_TARGET];
     }
-
     /**
      * The maximum lightness value for this target.
      */
     @FloatRange(from = 0, to = 1)
-    public float getMaximumLightness() {
+    public float getMaximumLightness()
+    {
         return mLightnessTargets[INDEX_MAX];
     }
-
     /**
      * Returns the weight of importance that this target places on a color's saturation within
      * the image.
@@ -186,10 +213,10 @@ public final class Target {
      *
      * @see #getTargetSaturation()
      */
-    public float getSaturationWeight() {
+    public float getSaturationWeight()
+    {
         return mWeights[INDEX_WEIGHT_SAT];
     }
-
     /**
      * Returns the weight of importance that this target places on a color's lightness within
      * the image.
@@ -199,10 +226,10 @@ public final class Target {
      *
      * @see #getTargetLightness()
      */
-    public float getLightnessWeight() {
+    public float getLightnessWeight()
+    {
         return mWeights[INDEX_WEIGHT_LUMA];
     }
-
     /**
      * Returns the weight of importance that this target places on a color's population within
      * the image.
@@ -210,91 +237,69 @@ public final class Target {
      * <p>The larger the weight, relative to the other weights, the more important that a
      * color's population being close to the most populous has on selection.</p>
      */
-    public float getPopulationWeight() {
+    public float getPopulationWeight()
+    {
         return mWeights[INDEX_WEIGHT_POP];
     }
-
     /**
      * Returns whether any color selected for this target is exclusive for this target only.
      *
      * <p>If false, then the color can be selected for other targets.</p>
      */
-    public boolean isExclusive() {
+    public boolean isExclusive()
+    {
         return mIsExclusive;
     }
-
-    private static void setTargetDefaultValues(final float[] values) {
-        values[INDEX_MIN] = 0f;
-        values[INDEX_TARGET] = 0.5f;
-        values[INDEX_MAX] = 1f;
-    }
-
-    private void setDefaultWeights() {
+    private void setDefaultWeights()
+    {
         mWeights[INDEX_WEIGHT_SAT] = WEIGHT_SATURATION;
         mWeights[INDEX_WEIGHT_LUMA] = WEIGHT_LUMA;
         mWeights[INDEX_WEIGHT_POP] = WEIGHT_POPULATION;
     }
-
-    void normalizeWeights() {
+    void normalizeWeights()
+    {
         float sum = 0;
-        for (int i = 0, z = mWeights.length; i < z; i++) {
+        for (int i = 0, z = mWeights.length; i < z; i++)
+        {
             float weight = mWeights[i];
-            if (weight > 0) {
+            if (weight > 0)
+            {
                 sum += weight;
             }
         }
-        if (sum != 0) {
-            for (int i = 0, z = mWeights.length; i < z; i++) {
-                if (mWeights[i] > 0) {
+        if (sum != 0)
+        {
+            for (int i = 0, z = mWeights.length; i < z; i++)
+            {
+                if (mWeights[i] > 0)
+                {
                     mWeights[i] /= sum;
                 }
             }
         }
     }
 
-    private static void setDefaultDarkLightnessValues(Target target) {
-        target.mLightnessTargets[INDEX_TARGET] = TARGET_DARK_LUMA;
-        target.mLightnessTargets[INDEX_MAX] = MAX_DARK_LUMA;
-    }
-
-    private static void setDefaultNormalLightnessValues(Target target) {
-        target.mLightnessTargets[INDEX_MIN] = MIN_NORMAL_LUMA;
-        target.mLightnessTargets[INDEX_TARGET] = TARGET_NORMAL_LUMA;
-        target.mLightnessTargets[INDEX_MAX] = MAX_NORMAL_LUMA;
-    }
-
-    private static void setDefaultLightLightnessValues(Target target) {
-        target.mLightnessTargets[INDEX_MIN] = MIN_LIGHT_LUMA;
-        target.mLightnessTargets[INDEX_TARGET] = TARGET_LIGHT_LUMA;
-    }
-
-    private static void setDefaultVibrantSaturationValues(Target target) {
-        target.mSaturationTargets[INDEX_MIN] = MIN_VIBRANT_SATURATION;
-        target.mSaturationTargets[INDEX_TARGET] = TARGET_VIBRANT_SATURATION;
-    }
-
-    private static void setDefaultMutedSaturationValues(Target target) {
-        target.mSaturationTargets[INDEX_TARGET] = TARGET_MUTED_SATURATION;
-        target.mSaturationTargets[INDEX_MAX] = MAX_MUTED_SATURATION;
-    }
-
     /**
      * Builder class for generating custom {@link Target} instances.
      */
-    public final static class Builder {
+    public final static class Builder
+    {
+
         private final Target mTarget;
 
         /**
          * Create a new {@link Target} builder from scratch.
          */
-        public Builder() {
+        public Builder()
+        {
             mTarget = new Target();
         }
 
         /**
          * Create a new builder based on an existing {@link Target}.
          */
-        public Builder(@NonNull Target target) {
+        public Builder(@NonNull Target target)
+        {
             mTarget = new Target(target);
         }
 
@@ -302,7 +307,8 @@ public final class Target {
          * Set the minimum saturation value for this target.
          */
         @NonNull
-        public Builder setMinimumSaturation(@FloatRange(from = 0, to = 1) float value) {
+        public Builder setMinimumSaturation(@FloatRange(from = 0, to = 1) float value)
+        {
             mTarget.mSaturationTargets[INDEX_MIN] = value;
             return this;
         }
@@ -311,7 +317,8 @@ public final class Target {
          * Set the target/ideal saturation value for this target.
          */
         @NonNull
-        public Builder setTargetSaturation(@FloatRange(from = 0, to = 1) float value) {
+        public Builder setTargetSaturation(@FloatRange(from = 0, to = 1) float value)
+        {
             mTarget.mSaturationTargets[INDEX_TARGET] = value;
             return this;
         }
@@ -320,7 +327,8 @@ public final class Target {
          * Set the maximum saturation value for this target.
          */
         @NonNull
-        public Builder setMaximumSaturation(@FloatRange(from = 0, to = 1) float value) {
+        public Builder setMaximumSaturation(@FloatRange(from = 0, to = 1) float value)
+        {
             mTarget.mSaturationTargets[INDEX_MAX] = value;
             return this;
         }
@@ -329,7 +337,8 @@ public final class Target {
          * Set the minimum lightness value for this target.
          */
         @NonNull
-        public Builder setMinimumLightness(@FloatRange(from = 0, to = 1) float value) {
+        public Builder setMinimumLightness(@FloatRange(from = 0, to = 1) float value)
+        {
             mTarget.mLightnessTargets[INDEX_MIN] = value;
             return this;
         }
@@ -338,7 +347,8 @@ public final class Target {
          * Set the target/ideal lightness value for this target.
          */
         @NonNull
-        public Builder setTargetLightness(@FloatRange(from = 0, to = 1) float value) {
+        public Builder setTargetLightness(@FloatRange(from = 0, to = 1) float value)
+        {
             mTarget.mLightnessTargets[INDEX_TARGET] = value;
             return this;
         }
@@ -347,7 +357,8 @@ public final class Target {
          * Set the maximum lightness value for this target.
          */
         @NonNull
-        public Builder setMaximumLightness(@FloatRange(from = 0, to = 1) float value) {
+        public Builder setMaximumLightness(@FloatRange(from = 0, to = 1) float value)
+        {
             mTarget.mLightnessTargets[INDEX_MAX] = value;
             return this;
         }
@@ -364,7 +375,8 @@ public final class Target {
          * @see #setTargetSaturation(float)
          */
         @NonNull
-        public Builder setSaturationWeight(@FloatRange(from = 0) float weight) {
+        public Builder setSaturationWeight(@FloatRange(from = 0) float weight)
+        {
             mTarget.mWeights[INDEX_WEIGHT_SAT] = weight;
             return this;
         }
@@ -381,7 +393,8 @@ public final class Target {
          * @see #setTargetLightness(float)
          */
         @NonNull
-        public Builder setLightnessWeight(@FloatRange(from = 0) float weight) {
+        public Builder setLightnessWeight(@FloatRange(from = 0) float weight)
+        {
             mTarget.mWeights[INDEX_WEIGHT_LUMA] = weight;
             return this;
         }
@@ -397,7 +410,8 @@ public final class Target {
          * bearing on the selection.</p>
          */
         @NonNull
-        public Builder setPopulationWeight(@FloatRange(from = 0) float weight) {
+        public Builder setPopulationWeight(@FloatRange(from = 0) float weight)
+        {
             mTarget.mWeights[INDEX_WEIGHT_POP] = weight;
             return this;
         }
@@ -410,7 +424,8 @@ public final class Target {
          *                  color can be selected for other targets.
          */
         @NonNull
-        public Builder setExclusive(boolean exclusive) {
+        public Builder setExclusive(boolean exclusive)
+        {
             mTarget.mIsExclusive = exclusive;
             return this;
         }
@@ -419,9 +434,11 @@ public final class Target {
          * Builds and returns the resulting {@link Target}.
          */
         @NonNull
-        public Target build() {
+        public Target build()
+        {
             return mTarget;
         }
+
     }
 
 }
