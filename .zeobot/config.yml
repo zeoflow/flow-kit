@@ -148,13 +148,13 @@ draft_release:
         - '@feature'
         - '@maintenance'
         - '@priority-high'
+        - '@priority-critical'
     # patch - version category
     patch:
       # these labels will influence the next version
       labels:
         - '@dependency-update'
         - '@enhancement'
-        - '@priority-critical'
         - '@priority-medium'
         - '@priority-low'
         - '@priority-very-low'
