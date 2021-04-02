@@ -30,7 +30,7 @@ auto_assign:
   use_review_groups: false
   use_assignee_groups: false
   add_reviewers: true
-  add_assignees: false
+  add_assignees: true
   number_of_assignees: 0
   number_of_reviewers: 0
   review_groups:
@@ -148,13 +148,13 @@ draft_release:
         - '@feature'
         - '@maintenance'
         - '@priority-high'
+        - '@priority-critical'
     # patch - version category
     patch:
       # these labels will influence the next version
       labels:
         - '@dependency-update'
         - '@enhancement'
-        - '@priority-critical'
         - '@priority-medium'
         - '@priority-low'
         - '@priority-very-low'

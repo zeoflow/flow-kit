@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: "[Component name] Short description of issue"
 labels: bug
-assignees: 'TeodorHMX1'
+assignees:
 
 ---
 
@@ -15,6 +15,5 @@ assignees: 'TeodorHMX1'
 
 **Android API version:** Android API version here
 
-To help us triage faster, please check to make sure you are using the [latest version](https://github.com/zeoflow/flow-kit/releases) of the library.
-
-We also happily accept [pull requests](https://github.com/zeoflow/flow-kit/pulls).
+###### To help us triage faster, please check to make sure you are using the [latest version](https://github.com/zeoflow/flow-kit/releases) of the library.
+###### We also happily accept [pull requests](https://github.com/zeoflow/flow-kit/pulls).
