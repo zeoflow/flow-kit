@@ -1,16 +1,23 @@
-package com.zeoflow.logger;
+// Copyright 2021 ZeoFlow SRL
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package com.zeoflow.log;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.util.Arrays;
-
-import static com.zeoflow.logger.Logger.ASSERT;
-import static com.zeoflow.logger.Logger.DEBUG;
-import static com.zeoflow.logger.Logger.ERROR;
-import static com.zeoflow.logger.Logger.INFO;
-import static com.zeoflow.logger.Logger.VERBOSE;
-import static com.zeoflow.logger.Logger.WARN;
 
 /**
  * Provides convenient methods to some common operations
@@ -106,17 +113,17 @@ final class Utils
     {
         switch (value)
         {
-            case VERBOSE:
+            case Log.VERBOSE:
                 return "VERBOSE";
-            case DEBUG:
+            case Log.DEBUG:
                 return "DEBUG";
-            case INFO:
+            case Log.INFO:
                 return "INFO";
-            case WARN:
+            case Log.WARN:
                 return "WARN";
-            case ERROR:
+            case Log.ERROR:
                 return "ERROR";
-            case ASSERT:
+            case Log.ASSERT:
                 return "ASSERT";
             default:
                 return "UNKNOWN";
