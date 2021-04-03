@@ -22,10 +22,7 @@ import android.view.ViewGroup;
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.Nullable;
 import com.zeoflow.initializer.ZeoFlowApp;
-import com.zeoflow.logger.AndroidLogAdapter;
-import com.zeoflow.logger.FormatStrategy;
-import com.zeoflow.logger.Logger;
-import com.zeoflow.logger.PrettyFormatStrategy;
+import com.zeoflow.log.Log;
 import com.zeoflow.zson.Zson;
 
 import java.util.List;
@@ -36,21 +33,20 @@ public abstract class RecyclerView
     public abstract static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder
     {
 
-        public Context zContext = ZeoFlowApp.getContext();
-        private String logger_tag = null;
+        public Context zContext;
+        private String log_tag = getClass().getSimpleName();
 
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
             zContext = itemView.getContext();
+            Log.configure(log_tag);
         }
-
         public void withLoggerTag(@NonNull String tag)
         {
-            logger_tag = tag;
+            log_tag = tag;
         }
-
-        public void logger(@NonNull String message, @Nullable Object... args)
+        public void log(@NonNull String message, @Nullable Object... args)
         {
 
             boolean isDebuggable = (0 != (zContext.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
@@ -58,18 +54,11 @@ public abstract class RecyclerView
             {
                 return;
             }
-            FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                    .showThreadInfo(false)
-                    .methodCount(0)
-                    .tag(logger_tag == null || logger_tag.isEmpty() ? this.getClass().getSimpleName() : logger_tag)
-                    .build();
-            Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
-            Logger.d(message, args);
+            Log.d(message, args);
 
         }
-
-        public void logger(Object... objects)
+        public void log(Object... objects)
         {
 
             boolean isDebuggable = (0 != (zContext.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
@@ -77,16 +66,10 @@ public abstract class RecyclerView
             {
                 return;
             }
-            FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                    .showThreadInfo(false)
-                    .methodCount(0)
-                    .tag(logger_tag == null || logger_tag.isEmpty() ? this.getClass().getSimpleName() : logger_tag)
-                    .build();
-            Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
             for (Object object : objects)
             {
-                Logger.json(new Zson().toJson(object));
+                Log.json(new Zson().toJson(object));
             }
         }
 
@@ -97,11 +80,12 @@ public abstract class RecyclerView
     {
 
         public Context zContext = ZeoFlowApp.getContext();
-        private String logger_tag = null;
+        private String log_tag = getClass().getSimpleName();
 
         public Adapter()
         {
             super();
+            Log.configure(log_tag);
         }
         @androidx.annotation.NonNull
         @Override
@@ -183,9 +167,9 @@ public abstract class RecyclerView
         // custom data
         public void withLoggerTag(@NonNull String tag)
         {
-            logger_tag = tag;
+            log_tag = tag;
         }
-        public void logger(@NonNull String message, @Nullable Object... args)
+        public void log(@NonNull String message, @Nullable Object... args)
         {
 
             boolean isDebuggable = (0 != (zContext.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
@@ -193,17 +177,11 @@ public abstract class RecyclerView
             {
                 return;
             }
-            FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                    .showThreadInfo(false)
-                    .methodCount(0)
-                    .tag(logger_tag == null || logger_tag.isEmpty() ? this.getClass().getSimpleName() : logger_tag)
-                    .build();
-            Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
-            Logger.d(message, args);
+            Log.d(message, args);
 
         }
-        public void logger(Object... objects)
+        public void log(Object... objects)
         {
 
             boolean isDebuggable = (0 != (zContext.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
@@ -211,16 +189,10 @@ public abstract class RecyclerView
             {
                 return;
             }
-            FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                    .showThreadInfo(false)
-                    .methodCount(0)
-                    .tag(logger_tag == null || logger_tag.isEmpty() ? this.getClass().getSimpleName() : logger_tag)
-                    .build();
-            Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
             for (Object object : objects)
             {
-                Logger.json(new Zson().toJson(object));
+                Log.json(new Zson().toJson(object));
             }
         }
 
