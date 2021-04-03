@@ -9,17 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.Nullable;
 import com.zeoflow.initializer.ZeoFlowApp;
-import com.zeoflow.logger.AndroidLogAdapter;
-import com.zeoflow.logger.FormatStrategy;
-import com.zeoflow.logger.Logger;
-import com.zeoflow.logger.PrettyFormatStrategy;
+import com.zeoflow.log.AndroidLogAdapter;
+import com.zeoflow.log.FormatStrategy;
+import com.zeoflow.log.Log;
+import com.zeoflow.log.PrettyFormatStrategy;
 import com.zeoflow.zson.Zson;
 
 public class RVHolderCore extends RecyclerView.ViewHolder
 {
 
     public Context zContext = ZeoFlowApp.getContext();
-    private String logger_tag = null;
+    private String logger_tag = getClass().getSimpleName();
 
     public RVHolderCore(@NonNull View itemView)
     {
@@ -44,9 +44,9 @@ public class RVHolderCore extends RecyclerView.ViewHolder
             .methodCount(0)
             .tag(logger_tag == null || logger_tag.isEmpty() ? this.getClass().getSimpleName() : logger_tag)
             .build();
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        Log.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
-        Logger.d(message, args);
+        Log.d(message, args);
 
     }
 
@@ -63,11 +63,11 @@ public class RVHolderCore extends RecyclerView.ViewHolder
             .methodCount(0)
             .tag(logger_tag == null || logger_tag.isEmpty() ? this.getClass().getSimpleName() : logger_tag)
             .build();
-        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+        Log.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
         for (Object object : objects)
         {
-            Logger.json(new Zson().toJson(object));
+            Log.json(new Zson().toJson(object));
         }
     }
 
