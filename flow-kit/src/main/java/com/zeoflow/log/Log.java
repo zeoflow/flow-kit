@@ -81,7 +81,7 @@ public final class Log
         //no instance
     }
     /**
-     * @param tag represents the logger tag
+     * @param tag represents the log tag
      */
     public static void configure(String tag)
     {

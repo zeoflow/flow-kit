@@ -160,7 +160,7 @@ public class CsvFormatStrategy implements FormatStrategy
             if (logStrategy == null)
             {
                 String diskPath = Objects.requireNonNull(getContext().getExternalFilesDir(null)).getAbsolutePath();
-                String folder = diskPath + File.separatorChar + "logger";
+                String folder = diskPath + File.separatorChar + "log";
 
                 HandlerThread ht = new HandlerThread("AndroidFileLogger." + folder);
                 ht.start();

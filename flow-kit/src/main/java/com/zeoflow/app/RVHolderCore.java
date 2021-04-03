@@ -19,7 +19,7 @@ public class RVHolderCore extends RecyclerView.ViewHolder
 {
 
     public Context zContext = ZeoFlowApp.getContext();
-    private String logger_tag = getClass().getSimpleName();
+    private String log_tag = getClass().getSimpleName();
 
     public RVHolderCore(@NonNull View itemView)
     {
@@ -28,10 +28,10 @@ public class RVHolderCore extends RecyclerView.ViewHolder
 
     public void withLoggerTag(@NonNull String tag)
     {
-        logger_tag = tag;
+        log_tag = tag;
     }
 
-    public void logger(@NonNull String message, @Nullable Object... args)
+    public void log(@NonNull String message, @Nullable Object... args)
     {
 
         boolean isDebuggable = (0 != (zContext.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
@@ -42,7 +42,7 @@ public class RVHolderCore extends RecyclerView.ViewHolder
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
             .showThreadInfo(false)
             .methodCount(0)
-            .tag(logger_tag == null || logger_tag.isEmpty() ? this.getClass().getSimpleName() : logger_tag)
+            .tag(log_tag == null || log_tag.isEmpty() ? this.getClass().getSimpleName() : log_tag)
             .build();
         Log.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
@@ -50,7 +50,7 @@ public class RVHolderCore extends RecyclerView.ViewHolder
 
     }
 
-    public void logger(Object... objects)
+    public void log(Object... objects)
     {
 
         boolean isDebuggable = (0 != (zContext.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
@@ -61,7 +61,7 @@ public class RVHolderCore extends RecyclerView.ViewHolder
         FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
             .showThreadInfo(false)
             .methodCount(0)
-            .tag(logger_tag == null || logger_tag.isEmpty() ? this.getClass().getSimpleName() : logger_tag)
+            .tag(log_tag == null || log_tag.isEmpty() ? this.getClass().getSimpleName() : log_tag)
             .build();
         Log.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 

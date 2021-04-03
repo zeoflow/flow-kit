@@ -23,24 +23,24 @@ public class Fragment extends androidx.fragment.app.Fragment
 {
 
     public Context zContext;
-    private String logger_tag = getClass().getSimpleName();
+    private String log_tag = getClass().getSimpleName();
 
     public Fragment()
     {
-        Log.configure(logger_tag);
+        Log.configure(log_tag);
         zContext = getActivity();
     }
     public Fragment(int contentLayoutId)
     {
         super(contentLayoutId);
-        Log.configure(logger_tag);
+        Log.configure(log_tag);
         zContext = getActivity();
     }
     public void withLoggerTag(@NonNull String tag)
     {
-        logger_tag = tag;
+        log_tag = tag;
     }
-    public void logger(@NonNull String message, @Nullable Object... args)
+    public void log(@NonNull String message, @Nullable Object... args)
     {
 
         boolean isDebuggable = (0 != (zContext.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
@@ -52,7 +52,7 @@ public class Fragment extends androidx.fragment.app.Fragment
         Log.d(message, args);
 
     }
-    public void logger(Object... objects)
+    public void log(Object... objects)
     {
 
         boolean isDebuggable = (0 != (zContext.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE));
