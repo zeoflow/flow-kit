@@ -19,7 +19,7 @@ public class FileUtil
     {
         StringBuilder content = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(
-            new InputStreamReader(assets.open(fileName), StandardCharsets.UTF_8)))
+                new InputStreamReader(assets.open(fileName), StandardCharsets.UTF_8)))
         {
 
             // do reading, usually loop until end of file reading

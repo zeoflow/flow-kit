@@ -15,32 +15,37 @@
 package com.zeoflow.utils;
 
 import android.graphics.Bitmap;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 
 /**
  * Helper for accessing features in {@link Bitmap}.
  */
-public final class BitmapCompat {
-    public static boolean hasMipMap(@NonNull Bitmap bitmap) {
+public final class BitmapCompat
+{
+
+    private BitmapCompat()
+    {
+    }
+    public static boolean hasMipMap(@NonNull Bitmap bitmap)
+    {
         return bitmap.hasMipMap();
     }
-
-    public static void setHasMipMap(@NonNull Bitmap bitmap, boolean hasMipMap) {
+    public static void setHasMipMap(@NonNull Bitmap bitmap, boolean hasMipMap)
+    {
         bitmap.setHasMipMap(hasMipMap);
     }
-
     /**
      * Returns the size of the allocated memory used to store this bitmap's pixels in a backwards
      * compatible way.
      *
      * @param bitmap the bitmap in which to return its allocation size
+     *
      * @return the allocation size in bytes
      */
-    public static int getAllocationByteCount(@NonNull Bitmap bitmap) {
+    public static int getAllocationByteCount(@NonNull Bitmap bitmap)
+    {
         return bitmap.getAllocationByteCount();
     }
 
-    private BitmapCompat() {}
 }

@@ -27,21 +27,29 @@ import androidx.annotation.Nullable;
 /**
  * Helper for accessing ColorFilter APIs on various API levels of the platform
  */
-public class BlendModeColorFilterCompat {
+public class BlendModeColorFilterCompat
+{
 
+    private BlendModeColorFilterCompat()
+    {
+    }
     /**
      * Convenience method to create ColorFilter in a backward
      * compatible way. This method falls back on PorterDuffColorFilter for API levels that
      * do not support BlendModeColorFilter. This method returns null if the BlendMode provided is
      * not supported on a given API level.
      */
-    public static @Nullable ColorFilter createBlendModeColorFilterCompat(int color,
-            @NonNull BlendModeCompat blendModeCompat) {
-        if (Build.VERSION.SDK_INT >= 29) {
+    public static @Nullable
+    ColorFilter createBlendModeColorFilterCompat(int color,
+                                                 @NonNull BlendModeCompat blendModeCompat)
+    {
+        if (Build.VERSION.SDK_INT >= 29)
+        {
             BlendMode blendMode = BlendModeUtils.obtainBlendModeFromCompat(blendModeCompat);
             return blendMode != null
                     ? new BlendModeColorFilter(color, blendMode) : null;
-        } else {
+        } else
+        {
             PorterDuff.Mode porterDuffMode =
                     BlendModeUtils.obtainPorterDuffFromCompat(blendModeCompat);
             return porterDuffMode != null
@@ -49,5 +57,4 @@ public class BlendModeColorFilterCompat {
         }
     }
 
-    private BlendModeColorFilterCompat() { }
 }

@@ -22,11 +22,12 @@ import androidx.annotation.RequiresApi;
  * Compat version of {@link android.graphics.BlendMode}, usages of {@link BlendModeCompat} will
  * map to {@link android.graphics.PorterDuff.Mode} wherever possible
  */
-public enum BlendModeCompat {
+public enum BlendModeCompat
+{
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Destination pixels covered by the source are cleared to 0.
      *
      * <p>\(\alpha_{out} = 0\)</p>
@@ -36,7 +37,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * The source pixels replace the destination pixels.
      *
      * <p>\(\alpha_{out} = \alpha_{src}\)</p>
@@ -46,7 +47,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * The source pixels are discarded, leaving the destination intact.
      *
      * <p>\(\alpha_{out} = \alpha_{dst}\)</p>
@@ -56,7 +57,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * The source pixels are drawn over the destination pixels.
      *
      * <p>\(\alpha_{out} = \alpha_{src} + (1 - \alpha_{src}) * \alpha_{dst}\)</p>
@@ -66,7 +67,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * The source pixels are drawn behind the destination pixels.
      *
      * <p>\(\alpha_{out} = \alpha_{dst} + (1 - \alpha_{dst}) * \alpha_{src}\)</p>
@@ -76,7 +77,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Keeps the source pixels that cover the destination pixels,
      * discards the remaining source and destination pixels.
      *
@@ -87,9 +88,9 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Keeps the destination pixels that cover source pixels,
-     *  discards the remaining source and destination pixels.
+     * discards the remaining source and destination pixels.
      * <p>\(\alpha_{out} = \alpha_{src} * \alpha_{dst}\)</p>
      * <p>\(C_{out} = C_{dst} * \alpha_{src}\)</p>
      */
@@ -97,7 +98,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Keeps the source pixels that do not cover destination pixels.
      * Discards source pixels that cover destination pixels. Discards all
      * destination pixels.
@@ -109,7 +110,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Keeps the destination pixels that are not covered by source pixels.
      * Discards destination pixels that are covered by source pixels. Discards all
      * source pixels.
@@ -121,7 +122,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Discards the source pixels that do not cover destination pixels.
      * Draws remaining source pixels over destination pixels.
      *
@@ -132,7 +133,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Discards the destination pixels that are not covered by source pixels.
      * Draws remaining destination pixels over source pixels.
      *
@@ -143,12 +144,12 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Discards the source and destination pixels where source pixels
      * cover destination pixels. Draws remaining source pixels.
      *
      * <p>
-     *     \(\alpha_{out} = (1 - \alpha_{dst}) * \alpha_{src} + (1 - \alpha_{src}) * \alpha_{dst}\)
+     * \(\alpha_{out} = (1 - \alpha_{dst}) * \alpha_{src} + (1 - \alpha_{src}) * \alpha_{dst}\)
      * </p>
      * <p>\(C_{out} = (1 - \alpha_{dst}) * C_{src} + (1 - \alpha_{src}) * C_{dst}\)</p>
      */
@@ -156,7 +157,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Adds the source pixels to the destination pixels and saturates
      * the result.
      *
@@ -167,18 +168,17 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Multiplies the source and destination pixels.
      *
      * <p>\(\alpha_{out} = \alpha_{src} * \alpha_{dst}\)</p>
      * <p>\(C_{out} = C_{src} * C_{dst}\)</p>
-     *
      */
     MODULATE,
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Adds the source and destination pixels, then subtracts the
      * source pixels multiplied by the destination.
      * <p>\(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)</p>
@@ -188,7 +188,7 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Multiplies or screens the source and destination depending on the
      * destination color.
      *
@@ -203,46 +203,46 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Retains the smallest component of the source and
      * destination pixels.
      * <p>\(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)</p>
      * <p>
-     *     \(C_{out} =
-     *     (1 - \alpha_{dst}) * C_{src} + (1 - \alpha_{src}) * C_{dst} + min(C_{src}, C_{dst})\)
+     * \(C_{out} =
+     * (1 - \alpha_{dst}) * C_{src} + (1 - \alpha_{src}) * C_{dst} + min(C_{src}, C_{dst})\)
      * </p>
      */
     DARKEN,
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Retains the largest component of the source and
      * destination pixel.
      * <p>\(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)</p>
      * <p>
-     *     \(C_{out} =
-     *      (1 - \alpha_{dst}) * C_{src} + (1 - \alpha_{src}) * C_{dst} + max(C_{src}, C_{dst})\)
+     * \(C_{out} =
+     * (1 - \alpha_{dst}) * C_{src} + (1 - \alpha_{src}) * C_{dst} + max(C_{src}, C_{dst})\)
      * </p>
      */
     LIGHTEN,
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Makes destination brighter to reflect source.
-     *     \(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)
+     * \(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)
      * </p>
      * <p>
-     *      \begin{equation}
-     *      C_{out} =
-     *      \begin{cases}
-     *          C_{src} * (1 - \alpha_{dst}) & C_{dst} = 0 \\
-     *          C_{src} + \alpha_{dst}*(1 - \alpha_{src}) & C_{src} = \alpha_{src} \\
-     *          \alpha_{src} * min(\alpha_{dst}, C_{dst} * \alpha_{src}/(\alpha_{src} - C_{src}))
-     *              + C_{src} *(1 - \alpha_{dst} + \alpha_{dst}*(1 - \alpha_{src}) & otherwise
-     *      \end{cases}
-     *      \end{equation}
+     * \begin{equation}
+     * C_{out} =
+     * \begin{cases}
+     * C_{src} * (1 - \alpha_{dst}) & C_{dst} = 0 \\
+     * C_{src} + \alpha_{dst}*(1 - \alpha_{src}) & C_{src} = \alpha_{src} \\
+     * \alpha_{src} * min(\alpha_{dst}, C_{dst} * \alpha_{src}/(\alpha_{src} - C_{src}))
+     * + C_{src} *(1 - \alpha_{dst} + \alpha_{dst}*(1 - \alpha_{src}) & otherwise
+     * \end{cases}
+     * \end{equation}
      * </p>
      */
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -250,23 +250,23 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Makes destination darker to reflect source.
      *
      * <p>
-     *     \(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)
+     * \(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)
      * </p>
      * <p>
-     *     \begin{equation}
-     *     C_{out} =
-     *     \begin{cases}
-     *         C_{dst} + C_{src}*(1 - \alpha_{dst}) & C_{dst} = \alpha_{dst} \\
-     *         \alpha_{dst}*(1 - \alpha_{src}) & C_{src} = 0 \\
-     *         \alpha_{src}*(\alpha_{dst} - min(\alpha_{dst}, (\alpha_{dst}
-     *         - C_{dst})*\alpha_{src}/C_{src}))
-     *         + C_{src} * (1 - \alpha_{dst}) + \alpha_{dst}*(1-\alpha_{src}) & otherwise
-     *     \end{cases}
-     *     \end{equation}
+     * \begin{equation}
+     * C_{out} =
+     * \begin{cases}
+     * C_{dst} + C_{src}*(1 - \alpha_{dst}) & C_{dst} = \alpha_{dst} \\
+     * \alpha_{dst}*(1 - \alpha_{src}) & C_{src} = 0 \\
+     * \alpha_{src}*(\alpha_{dst} - min(\alpha_{dst}, (\alpha_{dst}
+     * - C_{dst})*\alpha_{src}/C_{src}))
+     * + C_{src} * (1 - \alpha_{dst}) + \alpha_{dst}*(1-\alpha_{src}) & otherwise
+     * \end{cases}
+     * \end{equation}
      * </p>
      */
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -274,21 +274,21 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Makes destination lighter or darker, depending on source.
      * <p>
-     *     \(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)
+     * \(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)
      * </p>
      * <p>
-     *     \begin{equation}
-     *      C_{out} =
-     *      \begin{cases}
-     *           2*C_{src}*C_{dst} & C_{src}*(1-\alpha_{dst}) + C_{dst}*(1-\alpha_{src}) + 2*C_{src}
-     *              \leq \alpha_{src} \\
-     *           \alpha_{src}*\alpha_{dst}- 2*(\alpha_{dst} - C_{dst})*(\alpha_{src} - C_{src})
-     *              & otherwise
-     *      \end{cases}
-     *      \end{equation}
+     * \begin{equation}
+     * C_{out} =
+     * \begin{cases}
+     * 2*C_{src}*C_{dst} & C_{src}*(1-\alpha_{dst}) + C_{dst}*(1-\alpha_{src}) + 2*C_{src}
+     * \leq \alpha_{src} \\
+     * \alpha_{src}*\alpha_{dst}- 2*(\alpha_{dst} - C_{dst})*(\alpha_{src} - C_{src})
+     * & otherwise
+     * \end{cases}
+     * \end{equation}
      * </p>
      */
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -296,45 +296,45 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Makes destination lighter or darker, depending on source.
      * <p>
-     *     Where
-     *       \begin{equation}
-     *       m =
-     *          \begin{cases}
-     *              C_{dst} / \alpha_{dst} & \alpha_{dst} \gt 0 \\
-     *              0 & otherwise
-     *          \end{cases}
-     *       \end{equation}
+     * Where
+     * \begin{equation}
+     * m =
+     * \begin{cases}
+     * C_{dst} / \alpha_{dst} & \alpha_{dst} \gt 0 \\
+     * 0 & otherwise
+     * \end{cases}
+     * \end{equation}
      * </p>
      * <p>
-     *       \begin{equation}
-     *       g =
-     *          \begin{cases}
-     *              (16 * m * m + 4 * m) * (m - 1) + 7 * m & 4 * C_{dst} \leq \alpha_{dst} \\
-     *              \sqrt m - m & otherwise
-     *          \end{cases}
-     *       \end{equation}
+     * \begin{equation}
+     * g =
+     * \begin{cases}
+     * (16 * m * m + 4 * m) * (m - 1) + 7 * m & 4 * C_{dst} \leq \alpha_{dst} \\
+     * \sqrt m - m & otherwise
+     * \end{cases}
+     * \end{equation}
      * </p>
      * <p>
-     *       \begin{equation}
-     *       f =
-     *          \begin{cases}
-     *              C_{dst} * (\alpha_{src} + (2 * C_{src} - \alpha_{src}) * (1 - m))
-     *                  & 2 * C_{src} \leq \alpha_{src} \\
-     *              C_{dst} * \alpha_{src} + \alpha_{dst} * (2 * C_{src} - \alpha_{src}) * g
-     *                  & otherwise
-     *          \end{cases}
-     *       \end{equation}
+     * \begin{equation}
+     * f =
+     * \begin{cases}
+     * C_{dst} * (\alpha_{src} + (2 * C_{src} - \alpha_{src}) * (1 - m))
+     * & 2 * C_{src} \leq \alpha_{src} \\
+     * C_{dst} * \alpha_{src} + \alpha_{dst} * (2 * C_{src} - \alpha_{src}) * g
+     * & otherwise
+     * \end{cases}
+     * \end{equation}
      * </p>
      * <p>
-     *       \begin{equation}
-     *          \alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}
-     *       \end{equation}
-     *       \begin{equation}
-     *          C_{out} = C_{src} / \alpha_{dst} + C_{dst} / \alpha_{src} + f
-     *       \end{equation}
+     * \begin{equation}
+     * \alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}
+     * \end{equation}
+     * \begin{equation}
+     * C_{out} = C_{src} / \alpha_{dst} + C_{dst} / \alpha_{src} + f
+     * \end{equation}
      * </p>
      */
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -342,18 +342,18 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Subtracts darker from lighter with higher contrast.
      * <p>
-     *     \begin{equation}
-     *          \alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}
-     *     \end{equation}
+     * \begin{equation}
+     * \alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}
+     * \end{equation}
      * </p>
      * <p>
-     *     \begin{equation}
-     *           C_{out} = C_{src} + C_{dst} - 2 * min(C_{src}
-     *                       * \alpha_{dst}, C_{dst} * \alpha_{src})
-     *     \end{equation}
+     * \begin{equation}
+     * C_{out} = C_{src} + C_{dst} - 2 * min(C_{src}
+     * * \alpha_{dst}, C_{dst} * \alpha_{src})
+     * \end{equation}
      * </p>
      */
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -361,17 +361,17 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Subtracts darker from lighter with lower contrast.
      * <p>
-     *     \begin{equation}
-     *          \alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}
-     *     \end{equation}
+     * \begin{equation}
+     * \alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}
+     * \end{equation}
      * </p>
      * <p>
-     *     \begin{equation}
-     *          C_{out} = C_{src} + C_{dst} - 2 * C_{src} * C_{dst}
-     *     \end{equation}
+     * \begin{equation}
+     * C_{out} = C_{src} + C_{dst} - 2 * C_{src} * C_{dst}
+     * \end{equation}
      * </p>
      */
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -379,11 +379,11 @@ public enum BlendModeCompat {
 
     /**
      * {@usesMathJax}
-     *
+     * <p>
      * Multiplies the source and destination pixels.
      * <p>\(\alpha_{out} = \alpha_{src} + \alpha_{dst} - \alpha_{src} * \alpha_{dst}\)</p>
      * <p>\(C_{out} =
-     *      C_{src} * (1 - \alpha_{dst}) + C_{dst} * (1 - \alpha_{src}) + (C_{src} * C_{dst})\)
+     * C_{src} * (1 - \alpha_{dst}) + C_{dst} * (1 - \alpha_{src}) + (C_{src} * C_{dst})\)
      * </p>
      */
     @RequiresApi(Build.VERSION_CODES.Q)

@@ -25,11 +25,18 @@ import androidx.annotation.RequiresApi;
  * Utility class used to map BlendModeCompat parameters to the corresponding
  * PorterDuff mode or BlendMode depending on the API level of the platform
  */
-/* package */ class BlendModeUtils {
+/* package */ class BlendModeUtils
+{
 
+    private BlendModeUtils()
+    {
+    }
     @RequiresApi(29)
-    /* package */ static @Nullable BlendMode obtainBlendModeFromCompat(@NonNull BlendModeCompat blendModeCompat) {
-        switch (blendModeCompat) {
+    /* package */ static @Nullable
+    BlendMode obtainBlendModeFromCompat(@NonNull BlendModeCompat blendModeCompat)
+    {
+        switch (blendModeCompat)
+        {
             case CLEAR:
                 return BlendMode.CLEAR;
             case SRC:
@@ -92,11 +99,15 @@ import androidx.annotation.RequiresApi;
                 return null;
         }
     }
-
-    /* package */ static @Nullable PorterDuff.Mode obtainPorterDuffFromCompat(
-            @Nullable BlendModeCompat blendModeCompat) {
-        if (blendModeCompat != null) {
-            switch (blendModeCompat) {
+    /* package */
+    static @Nullable
+    PorterDuff.Mode obtainPorterDuffFromCompat(
+            @Nullable BlendModeCompat blendModeCompat)
+    {
+        if (blendModeCompat != null)
+        {
+            switch (blendModeCompat)
+            {
                 case CLEAR:
                     return PorterDuff.Mode.CLEAR;
                 case SRC:
@@ -137,10 +148,10 @@ import androidx.annotation.RequiresApi;
                 default:
                     return null;
             }
-        } else {
+        } else
+        {
             return null;
         }
     }
 
-    private BlendModeUtils() { }
 }

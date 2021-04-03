@@ -141,15 +141,15 @@ import static com.zeoflow.initializer.ZeoFlowApp.getContext;
 public class ContentCompat
 {
 
+    @AnyRes
+    public static final int ID_NULL = 0;
     private static final Object sLock = new Object();
-
     private static TypedValue sTempValue;
 
     protected ContentCompat()
     {
         // Not publicly instantiable, but may be extended.
     }
-
     @Nullable
     public static File getDataDir()
     {
@@ -162,31 +162,26 @@ public class ContentCompat
             return dataDir != null ? new File(dataDir) : null;
         }
     }
-
     @NonNull
     public static File[] getObbDirs()
     {
         return getContext().getObbDirs();
     }
-
     @NonNull
     public static File[] getExternalFilesDirs(@Nullable String type)
     {
         return getContext().getExternalFilesDirs(type);
     }
-
     @NonNull
     public static File[] getExternalCacheDirs()
     {
         return getContext().getExternalCacheDirs();
     }
-
     @Nullable
     public static Drawable getDrawable(@DrawableRes int id)
     {
         return ContentCompat.getDrawable(getContext().getResources(), id, getContext().getTheme());
     }
-
     @ColorInt
     public static int getColor(@ColorRes int id)
     {
@@ -198,12 +193,10 @@ public class ContentCompat
             return getContext().getResources().getColor(id);
         }
     }
-
     public static int checkSelfPermission(@NonNull String permission)
     {
         return getContext().checkPermission(permission, android.os.Process.myPid(), Process.myUid());
     }
-
     @Nullable
     public static File getNoBackupFilesDir()
     {
@@ -216,7 +209,6 @@ public class ContentCompat
             return createFilesDir(new File(appInfo.dataDir, "no_backup"));
         }
     }
-
     public static File getCodeCacheDir()
     {
         if (Build.VERSION.SDK_INT >= 21)
@@ -228,7 +220,6 @@ public class ContentCompat
             return createFilesDir(new File(appInfo.dataDir, "code_cache"));
         }
     }
-
     private synchronized static File createFilesDir(File file)
     {
         if (!file.exists())
@@ -245,7 +236,6 @@ public class ContentCompat
         }
         return file;
     }
-
     @Nullable
     public static Context createDeviceProtectedStorageContext()
     {
@@ -257,7 +247,6 @@ public class ContentCompat
             return null;
         }
     }
-
     public static boolean isDeviceProtectedStorage()
     {
         if (Build.VERSION.SDK_INT >= 24)
@@ -268,26 +257,6 @@ public class ContentCompat
             return false;
         }
     }
-
-    private static class MainHandlerExecutor implements Executor
-    {
-        private final Handler mHandler;
-
-        MainHandlerExecutor(@NonNull Handler handler)
-        {
-            mHandler = handler;
-        }
-
-        @Override
-        public void execute(Runnable command)
-        {
-            if (!mHandler.post(command))
-            {
-                throw new RejectedExecutionException(mHandler + " is shutting down");
-            }
-        }
-    }
-
     public static void startForegroundService(@NonNull Intent intent)
     {
         if (Build.VERSION.SDK_INT >= 26)
@@ -322,9 +291,96 @@ public class ContentCompat
         }
         return LegacyServiceMapHolder.SERVICES.get(serviceClass);
     }
+    @SuppressLint("UseCompatLoadingForDrawables")
+    @Nullable
+    public static Drawable getDrawable(@NonNull Resources res, @DrawableRes int id,
+                                       @Nullable Resources.Theme theme) throws Resources.NotFoundException
+    {
+        if (SDK_INT >= 21)
+        {
+            return res.getDrawable(id, theme);
+        } else
+        {
+            return res.getDrawable(id);
+        }
+    }
+    @Nullable
+    @SuppressWarnings("deprecation")
+    public static Drawable getDrawableForDensity(@NonNull Resources res, @DrawableRes int id,
+                                                 int density, @Nullable Resources.Theme theme) throws Resources.NotFoundException
+    {
+        if (SDK_INT >= 21)
+        {
+            return res.getDrawableForDensity(id, density, theme);
+        } else
+        {
+            return res.getDrawableForDensity(id, density);
+        }
+    }
+    @ColorInt
+    @SuppressWarnings("deprecation")
+    public static int getColor(@NonNull Resources res, @ColorRes int id, @Nullable Resources.Theme theme)
+            throws Resources.NotFoundException
+    {
+        if (SDK_INT >= 23)
+        {
+            return res.getColor(id, theme);
+        } else
+        {
+            return res.getColor(id);
+        }
+    }
+    @NonNull
+    @SuppressLint("UseCompatLoadingForColorStateLists")
+    public static ColorStateList getColorStateList(@NonNull Resources res, @ColorRes int id,
+                                                   @Nullable Resources.Theme theme) throws Resources.NotFoundException
+    {
+        if (SDK_INT >= 23)
+        {
+            return res.getColorStateList(id, theme);
+        } else
+        {
+            return res.getColorStateList(id);
+        }
+    }
+    public static float getFloat(@NonNull Resources res, @DimenRes int id)
+    {
+        // TODO call into platform on Q+
+
+        TypedValue value = new TypedValue();
+        res.getValue(id, value, true);
+        if (value.type == TypedValue.TYPE_FLOAT)
+        {
+            return value.getFloat();
+        }
+        throw new Resources.NotFoundException("Resource ID #0x" + Integer.toHexString(id)
+                + " type #0x" + Integer.toHexString(value.type) + " is not valid");
+    }
+
+    private static class MainHandlerExecutor implements Executor
+    {
+
+        private final Handler mHandler;
+
+        MainHandlerExecutor(@NonNull Handler handler)
+        {
+            mHandler = handler;
+        }
+
+        @Override
+        public void execute(Runnable command)
+        {
+            if (!mHandler.post(command))
+            {
+                throw new RejectedExecutionException(mHandler + " is shutting down");
+            }
+        }
+
+    }
 
     private static final class LegacyServiceMapHolder
     {
+
         static final HashMap<Class<?>, String> SERVICES = new HashMap<>();
 
         static
@@ -389,80 +445,6 @@ public class ContentCompat
         }
     }
 
-    @AnyRes
-    public static final int ID_NULL = 0;
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    @Nullable
-    public static Drawable getDrawable(@NonNull Resources res, @DrawableRes int id,
-                                       @Nullable Resources.Theme theme) throws Resources.NotFoundException
-    {
-        if (SDK_INT >= 21)
-        {
-            return res.getDrawable(id, theme);
-        } else
-        {
-            return res.getDrawable(id);
-        }
-    }
-
-
-    @Nullable
-    @SuppressWarnings("deprecation")
-    public static Drawable getDrawableForDensity(@NonNull Resources res, @DrawableRes int id,
-                                                 int density, @Nullable Resources.Theme theme) throws Resources.NotFoundException
-    {
-        if (SDK_INT >= 21)
-        {
-            return res.getDrawableForDensity(id, density, theme);
-        } else
-        {
-            return res.getDrawableForDensity(id, density);
-        }
-    }
-
-    @ColorInt
-    @SuppressWarnings("deprecation")
-    public static int getColor(@NonNull Resources res, @ColorRes int id, @Nullable Resources.Theme theme)
-        throws Resources.NotFoundException
-    {
-        if (SDK_INT >= 23)
-        {
-            return res.getColor(id, theme);
-        } else
-        {
-            return res.getColor(id);
-        }
-    }
-
-    @NonNull
-    @SuppressLint("UseCompatLoadingForColorStateLists")
-    public static ColorStateList getColorStateList(@NonNull Resources res, @ColorRes int id,
-                                                   @Nullable Resources.Theme theme) throws Resources.NotFoundException
-    {
-        if (SDK_INT >= 23)
-        {
-            return res.getColorStateList(id, theme);
-        } else
-        {
-            return res.getColorStateList(id);
-        }
-    }
-
-    public static float getFloat(@NonNull Resources res, @DimenRes int id)
-    {
-        // TODO call into platform on Q+
-
-        TypedValue value = new TypedValue();
-        res.getValue(id, value, true);
-        if (value.type == TypedValue.TYPE_FLOAT)
-        {
-            return value.getFloat();
-        }
-        throw new Resources.NotFoundException("Resource ID #0x" + Integer.toHexString(id)
-            + " type #0x" + Integer.toHexString(value.type) + " is not valid");
-    }
-
     public abstract static class FontCallback
     {
 
@@ -518,7 +500,7 @@ public class ContentCompat
          */
         @RestrictTo(LIBRARY_GROUP_PREFIX)
         public final void callbackFailAsync(
-            @FontsContractCompat.FontRequestCallback.FontRequestFailReason final int reason, @Nullable Handler handler)
+                @FontsContractCompat.FontRequestCallback.FontRequestFailReason final int reason, @Nullable Handler handler)
         {
             if (handler == null)
             {
@@ -533,11 +515,12 @@ public class ContentCompat
                 }
             });
         }
-    }
 
+    }
 
     public static final class ThemeCompat
     {
+
         private ThemeCompat()
         {
         }
@@ -570,6 +553,7 @@ public class ContentCompat
         @RequiresApi(29)
         static class ImplApi29
         {
+
             private ImplApi29()
             {
             }
@@ -578,20 +562,19 @@ public class ContentCompat
             {
                 theme.rebase();
             }
+
         }
 
         @RequiresApi(23)
         static class ImplApi23
         {
+
+            private static final Object sRebaseMethodLock = new Object();
+            private static Method sRebaseMethod;
+            private static boolean sRebaseMethodFetched;
             private ImplApi23()
             {
             }
-
-            private static final Object sRebaseMethodLock = new Object();
-
-            private static Method sRebaseMethod;
-            private static boolean sRebaseMethodFetched;
-
             static void rebase(@NonNull Resources.Theme theme)
             {
                 synchronized (sRebaseMethodLock)
@@ -621,7 +604,10 @@ public class ContentCompat
                     }
                 }
             }
+
         }
+
     }
+
 }
 
