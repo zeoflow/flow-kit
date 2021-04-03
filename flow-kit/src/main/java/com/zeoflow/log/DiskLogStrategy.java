@@ -1,4 +1,4 @@
-package com.zeoflow.logger;
+package com.zeoflow.log;
 
 import android.os.Handler;
 import android.os.Looper;

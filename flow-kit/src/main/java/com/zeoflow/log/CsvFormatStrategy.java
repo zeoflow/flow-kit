@@ -1,6 +1,5 @@
-package com.zeoflow.logger;
+package com.zeoflow.log;
 
-import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 

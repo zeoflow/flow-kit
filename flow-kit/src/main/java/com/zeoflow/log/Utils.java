@@ -1,16 +1,9 @@
-package com.zeoflow.logger;
+package com.zeoflow.log;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.util.Arrays;
-
-import static com.zeoflow.logger.Logger.ASSERT;
-import static com.zeoflow.logger.Logger.DEBUG;
-import static com.zeoflow.logger.Logger.ERROR;
-import static com.zeoflow.logger.Logger.INFO;
-import static com.zeoflow.logger.Logger.VERBOSE;
-import static com.zeoflow.logger.Logger.WARN;
 
 /**
  * Provides convenient methods to some common operations
@@ -106,17 +99,17 @@ final class Utils
     {
         switch (value)
         {
-            case VERBOSE:
+            case Log.VERBOSE:
                 return "VERBOSE";
-            case DEBUG:
+            case Log.DEBUG:
                 return "DEBUG";
-            case INFO:
+            case Log.INFO:
                 return "INFO";
-            case WARN:
+            case Log.WARN:
                 return "WARN";
-            case ERROR:
+            case Log.ERROR:
                 return "ERROR";
-            case ASSERT:
+            case Log.ASSERT:
                 return "ASSERT";
             default:
                 return "UNKNOWN";

@@ -1,4 +1,4 @@
-package com.zeoflow.logger;
+package com.zeoflow.log;
 
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.Nullable;
@@ -19,40 +19,40 @@ import static com.zeoflow.core.utils.Preconditions.checkNotNull;
  * <h3>How to use it</h3>
  * Initialize it first
  * <pre><code>
- *   Logger.addLogAdapter(new AndroidLogAdapter());
+ *   Log.addLogAdapter(new AndroidLogAdapter());
  * </code></pre>
  * <p>
- * And use the appropriate static Logger methods.
+ * And use the appropriate static Log methods.
  *
  * <pre><code>
- *   Logger.d("debug");
- *   Logger.e("error");
- *   Logger.w("warning");
- *   Logger.v("verbose");
- *   Logger.i("information");
- *   Logger.wtf("What a Terrible Failure");
+ *   Log.d("debug");
+ *   Log.e("error");
+ *   Log.w("warning");
+ *   Log.v("verbose");
+ *   Log.i("information");
+ *   Log.wtf("What a Terrible Failure");
  * </code></pre>
  *
  * <h3>String format arguments are supported</h3>
  * <pre><code>
- *   Logger.d("hello %s", "world");
+ *   Log.d("hello %s", "world");
  * </code></pre>
  *
  * <h3>Collections are support ed(only available for debug logs)</h3>
  * <pre><code>
- *   Logger.d(MAP);
- *   Logger.d(SET);
- *   Logger.d(LIST);
- *   Logger.d(ARRAY);
+ *   Log.d(MAP);
+ *   Log.d(SET);
+ *   Log.d(LIST);
+ *   Log.d(ARRAY);
  * </code></pre>
  *
  * <h3>Json and Xml support (output will be in debug level)</h3>
  * <pre><code>
- *   Logger.json(JSON_CONTENT);
- *   Logger.xml(XML_CONTENT);
+ *   Log.json(JSON_CONTENT);
+ *   Log.xml(XML_CONTENT);
  * </code></pre>
  *
- * <h3>Customize Logger</h3>
+ * <h3>Customize Log</h3>
  * Based on your needs, you can change the following settings:
  * <ul>
  *   <li>Different {@link LogAdapter}</li>
@@ -64,7 +64,7 @@ import static com.zeoflow.core.utils.Preconditions.checkNotNull;
  * @see FormatStrategy
  * @see LogStrategy
  */
-public final class Logger
+public final class Log
 {
 
     public static final int VERBOSE = 2;
@@ -73,30 +73,42 @@ public final class Logger
     public static final int WARN = 5;
     public static final int ERROR = 6;
     public static final int ASSERT = 7;
-
     @NonNull
-    private static Printer printer = new LoggerPrinter();
+    private static Printer printer = new LogPrinter();
 
-    private Logger()
+    private Log()
     {
         //no instance
     }
-
+    /**
+     * @param tag represents the logger tag
+     */
+    public static void configure(String tag)
+    {
+        if (tag == null)
+        {
+            tag = "Log";
+        }
+        clearLogAdapters();
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .showThreadInfo(false)
+                .methodCount(0)
+                .tag(tag)
+                .build();
+        addLogAdapter(new AndroidLogAdapter(formatStrategy));
+    }
     public static void printer(@NonNull Printer printer)
     {
-        Logger.printer = checkNotNull(printer);
+        Log.printer = checkNotNull(printer);
     }
-
     public static void addLogAdapter(@NonNull LogAdapter adapter)
     {
         printer.addAdapter(checkNotNull(adapter));
     }
-
     public static void clearLogAdapters()
     {
         printer.clearLogAdapters();
     }
-
     /**
      * Given tag will be used as tag only once for this method call regardless of the tag that's been
      * set during initialization. After this invocation, the general tag that's been set will
@@ -106,7 +118,6 @@ public final class Logger
     {
         return printer.t(tag);
     }
-
     /**
      * General log function that accepts all configurations as parameter
      */
@@ -114,42 +125,34 @@ public final class Logger
     {
         printer.log(priority, tag, message, throwable);
     }
-
     public static void d(@NonNull String message, @Nullable Object... args)
     {
         printer.d(message, args);
     }
-
     public static void d(@Nullable Object object)
     {
         printer.d(object);
     }
-
     public static void e(@NonNull String message, @Nullable Object... args)
     {
         printer.e(null, message, args);
     }
-
     public static void e(@Nullable Throwable throwable, @NonNull String message, @Nullable Object... args)
     {
         printer.e(throwable, message, args);
     }
-
     public static void i(@NonNull String message, @Nullable Object... args)
     {
         printer.i(message, args);
     }
-
     public static void v(@NonNull String message, @Nullable Object... args)
     {
         printer.v(message, args);
     }
-
     public static void w(@NonNull String message, @Nullable Object... args)
     {
         printer.w(message, args);
     }
-
     /**
      * Tip: Use this for exceptional situations to log
      * ie: Unexpected errors etc
@@ -158,7 +161,6 @@ public final class Logger
     {
         printer.wtf(message, args);
     }
-
     /**
      * Formats the given json content and print it
      */
@@ -166,7 +168,6 @@ public final class Logger
     {
         printer.json(json);
     }
-
     /**
      * Formats the given xml content and print it
      */

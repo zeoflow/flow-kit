@@ -1,4 +1,4 @@
-package com.zeoflow.logger;
+package com.zeoflow.log;
 
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.Nullable;
@@ -222,7 +222,7 @@ public class PrettyFormatStrategy implements FormatStrategy
         {
             StackTraceElement e = trace[i];
             String name = e.getClassName();
-            if (!name.equals(LoggerPrinter.class.getName()) && !name.equals(Logger.class.getName()))
+            if (!name.equals(LogPrinter.class.getName()) && !name.equals(Log.class.getName()))
             {
                 return --i;
             }

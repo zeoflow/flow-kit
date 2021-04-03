@@ -1,10 +1,10 @@
-package com.zeoflow.logger;
+package com.zeoflow.log;
 
 import com.zeoflow.annotation.NonNull;
 import com.zeoflow.annotation.Nullable;
 
 /**
- * Provides a common interface to emits logs through. This is a required contract for Logger.
+ * Provides a common interface to emits logs through. This is a required contract for Log.
  *
  * @see AndroidLogAdapter
  * @see DiskLogAdapter
