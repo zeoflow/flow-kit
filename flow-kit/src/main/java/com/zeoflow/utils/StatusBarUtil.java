@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.zeoflow.app;
+package com.zeoflow.utils;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -29,28 +29,27 @@ import android.widget.LinearLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.zeoflow.flow.kit.R;
 import com.zeoflow.annotation.ColorInt;
 import com.zeoflow.annotation.IntRange;
 import com.zeoflow.annotation.NonNull;
+import com.zeoflow.flow.kit.R;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+@SuppressWarnings({"unused", "RedundantSuppression"})
 public class StatusBarUtil
 {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
-    private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.zf_cr_statusbarutil_fake_status_bar_view;
-    private static final int FAKE_TRANSLUCENT_VIEW_ID = R.id.zf_cr_statusbarutil_translucent_view;
+    private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.zf_flow_kit_statusbarutil_fake_status_bar_view;
+    private static final int FAKE_TRANSLUCENT_VIEW_ID = R.id.zf_flow_kit_statusbarutil_translucent_view;
     private static final int TAG_KEY_HAVE_SET_OFFSET = -123;
-
 
     public static void setColor(Activity activity, @ColorInt int color)
     {
         setColor(activity, color, DEFAULT_STATUS_BAR_ALPHA);
     }
-
 
     public static void setColor(Activity activity, @ColorInt int color, @IntRange(from = 0, to = 255) int statusBarAlpha)
     {
@@ -79,12 +78,10 @@ public class StatusBarUtil
         }
     }
 
-
     public static void setColorForSwipeBack(Activity activity, int color)
     {
         setColorForSwipeBack(activity, color, DEFAULT_STATUS_BAR_ALPHA);
     }
-
 
     public static void setColorForSwipeBack(Activity activity, @ColorInt int color,
                                             @IntRange(from = 0, to = 255) int statusBarAlpha)
@@ -105,18 +102,16 @@ public class StatusBarUtil
         setTransparentForWindow(activity);
     }
 
-
     public static void setColorNoTranslucent(Activity activity, @ColorInt int color)
     {
         setColor(activity, color, 0);
     }
 
-
     @Deprecated
     public static void setColorDiff(Activity activity, @ColorInt int color)
     {
         transparentStatusBar(activity);
-        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        ViewGroup contentView = activity.findViewById(android.R.id.content);
 
         View fakeStatusBarView = contentView.findViewById(FAKE_STATUS_BAR_VIEW_ID);
         if (fakeStatusBarView != null)
@@ -132,7 +127,6 @@ public class StatusBarUtil
         }
         setRootView(activity);
     }
-
 
     public static void setTranslucent(Activity activity)
     {
@@ -188,7 +182,6 @@ public class StatusBarUtil
             activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
-
         ViewGroup contentLayout = (ViewGroup) drawerLayout.getChildAt(0);
         View fakeStatusBarView = contentLayout.findViewById(FAKE_STATUS_BAR_VIEW_ID);
         if (fakeStatusBarView != null)
@@ -206,14 +199,13 @@ public class StatusBarUtil
         if (!(contentLayout instanceof LinearLayout) && contentLayout.getChildAt(1) != null)
         {
             contentLayout.getChildAt(1)
-                .setPadding(contentLayout.getPaddingLeft(), getStatusBarHeight(activity) + contentLayout.getPaddingTop(),
-                    contentLayout.getPaddingRight(), contentLayout.getPaddingBottom());
+                    .setPadding(contentLayout.getPaddingLeft(), getStatusBarHeight(activity) + contentLayout.getPaddingTop(),
+                            contentLayout.getPaddingRight(), contentLayout.getPaddingBottom());
         }
 
         setDrawerLayoutProperty(drawerLayout, contentLayout);
         addTranslucentView(activity, statusBarAlpha);
     }
-
 
     private static void setDrawerLayoutProperty(DrawerLayout drawerLayout, ViewGroup drawerLayoutContentLayout)
     {
@@ -223,7 +215,6 @@ public class StatusBarUtil
         drawerLayoutContentLayout.setClipToPadding(true);
         drawer.setFitsSystemWindows(false);
     }
-
 
     @Deprecated
     public static void setColorForDrawerLayoutDiff(Activity activity, DrawerLayout drawerLayout, @ColorInt int color)
@@ -253,12 +244,10 @@ public class StatusBarUtil
         setDrawerLayoutProperty(drawerLayout, contentLayout);
     }
 
-
     public static void setTranslucentForDrawerLayout(Activity activity, DrawerLayout drawerLayout)
     {
         setTranslucentForDrawerLayout(activity, drawerLayout, DEFAULT_STATUS_BAR_ALPHA);
     }
-
 
     public static void setTranslucentForDrawerLayout(Activity activity, DrawerLayout drawerLayout,
                                                      @IntRange(from = 0, to = 255) int statusBarAlpha)
@@ -266,7 +255,6 @@ public class StatusBarUtil
         setTransparentForDrawerLayout(activity, drawerLayout);
         addTranslucentView(activity, statusBarAlpha);
     }
-
 
     public static void setTransparentForDrawerLayout(Activity activity, DrawerLayout drawerLayout)
     {
@@ -287,10 +275,8 @@ public class StatusBarUtil
             contentLayout.getChildAt(1).setPadding(0, getStatusBarHeight(activity), 0, 0);
         }
 
-
         setDrawerLayoutProperty(drawerLayout, contentLayout);
     }
-
 
     @Deprecated
     public static void setTranslucentForDrawerLayoutDiff(Activity activity, DrawerLayout drawerLayout)
@@ -308,18 +294,15 @@ public class StatusBarUtil
         drawerLayout.setFitsSystemWindows(false);
     }
 
-
     public static void setTransparentForImageView(Activity activity, View needOffsetView)
     {
         setTranslucentForImageView(activity, 0, needOffsetView);
     }
 
-
     public static void setTranslucentForImageView(Activity activity, View needOffsetView)
     {
         setTranslucentForImageView(activity, DEFAULT_STATUS_BAR_ALPHA, needOffsetView);
     }
-
 
     public static void setTranslucentForImageView(Activity activity, @IntRange(from = 0, to = 255) int statusBarAlpha,
                                                   View needOffsetView)
@@ -335,30 +318,26 @@ public class StatusBarUtil
             }
             ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) needOffsetView.getLayoutParams();
             layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin + getStatusBarHeight(activity),
-                layoutParams.rightMargin, layoutParams.bottomMargin);
+                    layoutParams.rightMargin, layoutParams.bottomMargin);
             needOffsetView.setTag(TAG_KEY_HAVE_SET_OFFSET, true);
         }
     }
-
 
     public static void setTranslucentForImageViewInFragment(Activity activity, View needOffsetView)
     {
         setTranslucentForImageViewInFragment(activity, DEFAULT_STATUS_BAR_ALPHA, needOffsetView);
     }
 
-
     public static void setTransparentForImageViewInFragment(Activity activity, View needOffsetView)
     {
         setTranslucentForImageViewInFragment(activity, 0, needOffsetView);
     }
-
 
     public static void setTranslucentForImageViewInFragment(Activity activity, @IntRange(from = 0, to = 255) int statusBarAlpha,
                                                             View needOffsetView)
     {
         setTranslucentForImageView(activity, statusBarAlpha, needOffsetView);
     }
-
 
     public static void hideFakeStatusBarView(Activity activity)
     {
@@ -397,7 +376,6 @@ public class StatusBarUtil
         }
     }
 
-
     private static void setMIUIStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon)
     {
         Class<? extends Window> clazz = activity.getWindow().getClass();
@@ -414,7 +392,7 @@ public class StatusBarUtil
         }
     }
 
-
+    @SuppressWarnings("JavaReflectionMemberAccess")
     private static void setMeizuStatusBarDarkIcon(@NonNull Activity activity, boolean darkIcon)
     {
         try
@@ -435,12 +413,11 @@ public class StatusBarUtil
             }
             meizuFlags.setInt(lp, value);
             activity.getWindow().setAttributes(lp);
-        } catch (Exception e)
+        } catch (Exception ignored)
         {
-
+            // ignored :)
         }
     }
-
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private static void clearPreviousSetting(Activity activity)
@@ -455,10 +432,9 @@ public class StatusBarUtil
         }
     }
 
-
     private static void addTranslucentView(Activity activity, @IntRange(from = 0, to = 255) int statusBarAlpha)
     {
-        ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
+        ViewGroup contentView = activity.findViewById(android.R.id.content);
         View fakeTranslucentView = contentView.findViewById(FAKE_TRANSLUCENT_VIEW_ID);
         if (fakeTranslucentView != null)
         {
@@ -473,29 +449,26 @@ public class StatusBarUtil
         }
     }
 
-
     private static View createStatusBarView(Activity activity, @ColorInt int color)
     {
         return createStatusBarView(activity, color, 0);
     }
-
 
     private static View createStatusBarView(Activity activity, @ColorInt int color, int alpha)
     {
 
         View statusBarView = new View(activity);
         LinearLayout.LayoutParams params =
-            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity));
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity));
         statusBarView.setLayoutParams(params);
         statusBarView.setBackgroundColor(calculateStatusColor(color, alpha));
         statusBarView.setId(FAKE_STATUS_BAR_VIEW_ID);
         return statusBarView;
     }
 
-
     private static void setRootView(Activity activity)
     {
-        ViewGroup parent = (ViewGroup) activity.findViewById(android.R.id.content);
+        ViewGroup parent = activity.findViewById(android.R.id.content);
         for (int i = 0, count = parent.getChildCount(); i < count; i++)
         {
             View childView = parent.getChildAt(i);
@@ -507,22 +480,20 @@ public class StatusBarUtil
         }
     }
 
-
     private static void setTransparentForWindow(Activity activity)
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
             activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
             activity.getWindow()
-                .getDecorView()
-                .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+                    .getDecorView()
+                    .setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         } else
         {
             activity.getWindow()
-                .setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    .setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
-
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private static void transparentStatusBar(Activity activity)
@@ -539,19 +510,17 @@ public class StatusBarUtil
         }
     }
 
-
     private static View createTranslucentStatusBarView(Activity activity, int alpha)
     {
 
         View statusBarView = new View(activity);
         LinearLayout.LayoutParams params =
-            new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity));
+                new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(activity));
         statusBarView.setLayoutParams(params);
         statusBarView.setBackgroundColor(Color.argb(alpha, 0, 0, 0));
         statusBarView.setId(FAKE_TRANSLUCENT_VIEW_ID);
         return statusBarView;
     }
-
 
     private static int getStatusBarHeight(Context context)
     {
@@ -559,7 +528,6 @@ public class StatusBarUtil
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         return context.getResources().getDimensionPixelSize(resourceId);
     }
-
 
     private static int calculateStatusColor(@ColorInt int color, int alpha)
     {
@@ -576,4 +544,5 @@ public class StatusBarUtil
         blue = (int) (blue * a + 0.5);
         return 0xff << 24 | red << 16 | green << 8 | blue;
     }
+
 }
