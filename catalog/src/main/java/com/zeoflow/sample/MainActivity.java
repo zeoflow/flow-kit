@@ -97,7 +97,7 @@ public class MainActivity extends Activity
     private void timeMemoDecrypt() {
         long startTime = System.currentTimeMillis();
 
-        System.out.println("v: " + Memo.decrypt("java.lang.Integer##0V@AQK933Niu5DcnhCpbDPC0gScYgb0iyYXeLB6Brr19z7zx64="));
+        System.out.println("v: " + Memo.decrypt(Memo.encrypt(42335)));
 
         long endTime = System.currentTimeMillis();
         System.out.println("Memo.decrypt: " + (endTime - startTime) + "ms");
