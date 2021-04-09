@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.zeoflow.app;
+package com.zeoflow.utils;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -41,8 +41,8 @@ public class StatusBarUtil
 {
 
     public static final int DEFAULT_STATUS_BAR_ALPHA = 112;
-    private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.zf_cr_statusbarutil_fake_status_bar_view;
-    private static final int FAKE_TRANSLUCENT_VIEW_ID = R.id.zf_cr_statusbarutil_translucent_view;
+    private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.zf_flow_kit_statusbarutil_fake_status_bar_view;
+    private static final int FAKE_TRANSLUCENT_VIEW_ID = R.id.zf_flow_kit_statusbarutil_translucent_view;
     private static final int TAG_KEY_HAVE_SET_OFFSET = -123;
 
 
