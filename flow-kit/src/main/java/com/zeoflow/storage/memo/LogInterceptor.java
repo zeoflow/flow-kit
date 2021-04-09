@@ -3,12 +3,14 @@ package com.zeoflow.storage.memo;
 /**
  * Interceptor for all logs happens in the library
  */
-public interface LogInterceptor {
+public interface LogInterceptor
+{
 
-  /**
-   * Will be triggered each time when a log is written
-   *
-   * @param message is the log message
-   */
-  void onLog(String message);
+    /**
+     * Will be triggered each time when a log is written
+     *
+     * @param message is the log message
+     */
+    void onLog(String message);
+
 }
