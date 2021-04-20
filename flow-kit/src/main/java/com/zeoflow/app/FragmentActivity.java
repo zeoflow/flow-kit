@@ -28,7 +28,7 @@ import com.zeoflow.log.Log;
 import com.zeoflow.log.PrettyFormatStrategy;
 import com.zeoflow.zson.Zson;
 
-public class FragmentActivity extends androidx.fragment.app.FragmentActivity
+public abstract class FragmentActivity extends androidx.fragment.app.FragmentActivity
 {
 
     public Context zContext;

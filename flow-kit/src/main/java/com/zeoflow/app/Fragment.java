@@ -33,7 +33,7 @@ import com.zeoflow.zson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class Fragment extends androidx.fragment.app.Fragment
+public abstract class Fragment extends androidx.fragment.app.Fragment
 {
 
     public Context zContext;
