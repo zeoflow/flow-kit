@@ -81,12 +81,6 @@ public abstract class Activity extends AppCompatActivity
         {
             return;
         }
-        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)
-                .methodCount(0)
-                .tag(log_tag == null || log_tag.isEmpty() ? this.getClass().getSimpleName() : log_tag)
-                .build();
-        Log.addLogAdapter(new AndroidLogAdapter(formatStrategy));
 
         for (Object object : objects)
         {
