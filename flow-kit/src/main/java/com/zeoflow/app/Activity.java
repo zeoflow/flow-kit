@@ -35,7 +35,7 @@ import com.zeoflow.zson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class Activity extends AppCompatActivity
+public abstract class Activity extends AppCompatActivity
 {
 
     public Context zContext = ZeoFlowApp.getContext();
