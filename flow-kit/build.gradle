@@ -50,7 +50,7 @@ dependencies {
 
 }
 
-apply from: "${rootProject.projectDir}/flow-kit/maven-push.gradle"
+apply from: "${rootProject.projectDir}/buildSrc/upload.gradle"
 repositories {
     mavenCentral()
 }
