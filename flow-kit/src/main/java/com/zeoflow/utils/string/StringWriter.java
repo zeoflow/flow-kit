@@ -31,7 +31,7 @@ final class StringWriter
     /**
      * Sentinel value that indicates that no user-provided package has been set.
      */
-    private static final Pattern LINE_BREAKING_PATTERN = Pattern.compile("\\R");
+    private static final Pattern LINE_BREAKING_PATTERN = Pattern.compile(Pattern.quote("\\R"));
 
     private final String indent;
     private final LineWrapper out;
