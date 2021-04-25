@@ -33,7 +33,7 @@ public final class StringCreator
 {
 
     private static final Pattern NAMED_ARGUMENT =
-            Pattern.compile("\\$(?<argumentName>[\\w_]+):(?<typeChar>[\\w]).*");
+            Pattern.compile("\\$(" + Pattern.quote("?<argumentName>") + "[\\w_]+):(" + Pattern.quote("?<typeChar>") + "[\\w]).*");
     private static final Pattern LOWERCASE = Pattern.compile("[a-z]+[\\w_]*");
 
     /**
