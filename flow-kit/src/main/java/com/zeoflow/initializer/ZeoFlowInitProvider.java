@@ -72,9 +72,6 @@ public class ZeoFlowInitProvider extends ContentProvider
         if (ZeoFlowApp.initializeApp(getContext()) == null)
         {
             throw new IllegalStateException("ZeoFlowApp initialization unsuccessful");
-        } else
-        {
-            CrashReporter.initialize();
         }
         return false;
     }
