@@ -67,6 +67,7 @@ public class ZeoFlowApp
         }
     }
 
+    @Deprecated
     @NonNull
     public static ZeoFlowApp getInstance()
     {
@@ -85,6 +86,7 @@ public class ZeoFlowApp
         }
     }
 
+    @Deprecated
     @NonNull
     public static Context getContext()
     {
@@ -104,6 +106,7 @@ public class ZeoFlowApp
         }
     }
 
+    @Deprecated
     @NonNull
     public static ZeoFlowApp getInstance(@NonNull String name)
     {
@@ -132,6 +135,7 @@ public class ZeoFlowApp
         }
     }
 
+    @Deprecated
     public static ZeoFlowApp initializeApp(@NonNull Context context)
     {
         String normalizedName = normalize(DEFAULT_APP_NAME);
@@ -156,6 +160,7 @@ public class ZeoFlowApp
         return zeoflowApp;
     }
 
+    @Deprecated
     @NonNull
     public static ZeoFlowApp initializeApp(@NonNull Context context, @NonNull ZeoFlowOptions options)
     {
