@@ -31,21 +31,15 @@ configurations.all {
 }
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.zeoflow:zson:1.3.0'
-    implementation 'com.zeoflow:material-elements:2.4.1'
+    implementation 'com.zeoflow:material-elements:2.4.4'
     implementation 'com.zeoflow:stylar:1.1.0'
 
-    // todo remove this
-    api 'com.facebook.conceal:conceal:1.1.3@aar'
-
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'androidx.fragment:fragment:1.3.2'
-
-    // todo remove this
-    implementation 'androidx.security:security-crypto:1.1.0-alpha03'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.fragment:fragment:1.3.4'
 
     implementation("com.google.guava:guava:30.0-android")
     implementation("com.google.crypto.tink:tink-android:1.5.0")
