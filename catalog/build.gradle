@@ -29,5 +29,5 @@ android {
 dependencies {
 	implementation fileTree(dir: "libs", include: ["*.jar"])
 	implementation project(':flow-kit')
-	implementation 'com.zeoflow:material-elements:2.4.5'
+	implementation 'com.zeoflow:material-elements:2.5.0'
 }
