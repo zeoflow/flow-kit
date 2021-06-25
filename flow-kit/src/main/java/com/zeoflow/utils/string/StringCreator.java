@@ -414,6 +414,10 @@ public final class StringCreator
         private String argToName(Object o)
         {
             if (o instanceof CharSequence) return o.toString();
+            else if (o instanceof Integer) return o.toString();
+            else if (o instanceof Long) return o.toString();
+            else if (o instanceof Boolean) return o.toString();
+            else if (o instanceof Float) return o.toString();
             throw new IllegalArgumentException("expected name but was " + o);
         }
 
